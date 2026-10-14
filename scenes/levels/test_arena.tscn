@@ -1,8 +1,9 @@
 [gd_scene format=3 uid="uid://ckeiow78m3mbq"]
 
 [ext_resource type="Script" uid="uid://bex6cuici362i" path="res://scripts/debug/arena_debug.gd" id="1_3wevi"]
-[ext_resource type="PackedScene" path="res://entities/player/player.tscn" id="1_player"]
+[ext_resource type="PackedScene" uid="uid://d800atf5kklg" path="res://entities/player/player.tscn" id="1_player"]
 [ext_resource type="PackedScene" path="res://entities/enemies/dummy/dummy.tscn" id="2_dummy"]
+[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="4_4brh2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_floor"]
 size = Vector2(3000, 64)
@@ -32,3 +33,5 @@ position = Vector2(700, 618)
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=27633641]
 position = Vector2(640, 360)
+
+[node name="Hud" parent="." unique_id=822423716 instance=ExtResource("4_4brh2")]

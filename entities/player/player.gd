@@ -1,6 +1,8 @@
 class_name Player
 extends CharacterBody2D
 
+signal died   # HUD nghe để hiện màn hình thua
+
 ## action input -> tên node state
 const SKILL_ACTIONS := {
 	&"skill_wind": &"SkillWind",
@@ -24,9 +26,11 @@ var move_speed := 0.0
 var gravity := 0.0
 var jump_velocity := 0.0
 var max_fall_speed := 0.0
+var buff_time_left := 0.0   # giây còn lại của buff sát thương (Lửa)
 
 
 func _ready() -> void:
+	add_to_group(&"player")   # HUD tìm player qua group này
 	var px := Config.PX_PER_UNIT
 	move_speed = Config.get_value("player.move_speed", 6.0) * px
 	gravity = Config.get_value("player.gravity", 35.0) * px
@@ -35,6 +39,8 @@ func _ready() -> void:
 	jump_velocity = -sqrt(2.0 * gravity * Config.get_value("player.jump_height", 3.0) * px)
 	health.setup(Config.get_value("player.hp", 100.0))
 	hurtbox.health = health
+	health.damaged.connect(_on_damaged)
+	health.died.connect(_on_died)
 	machine.setup(self)
 
 
@@ -74,7 +80,48 @@ func poll_actions() -> StringName:
 	return &""
 
 
+## Gọi lại khi đang buff thì làm mới thời gian, không cộng dồn.
 func add_damage_buff(mult: float, duration: float) -> void:
 	damage_mult = mult
-	await get_tree().create_timer(duration).timeout
+	buff_time_left = duration
+
+
+func clear_buff() -> void:
 	damage_mult = 1.0
+	buff_time_left = 0.0
+
+
+## Miễn sát thương tạm thời theo nguồn (hurt, ...), tự tắt sau `duration` giây.
+func grant_iframes(source: StringName, duration: float) -> void:
+	hurtbox.set_invulnerable(source, true)
+	await get_tree().create_timer(duration).timeout
+	hurtbox.set_invulnerable(source, false)
+
+
+func _physics_process(delta: float) -> void:
+	if buff_time_left > 0.0:
+		buff_time_left -= delta
+		if buff_time_left <= 0.0:
+			clear_buff()
+
+
+## Nhấp nháy khi đang i-frame sau bị đánh, ám cam khi có buff Lửa.
+func _process(_delta: float) -> void:
+	var tint := Color(1.0, 0.8, 0.6) if buff_time_left > 0.0 else Color.WHITE
+	if hurtbox.has_invuln(&"hurt") and int(Time.get_ticks_msec() / 80.0) % 2 == 0:
+		tint.a = 0.35
+	sprite.modulate = tint
+
+
+func _on_damaged(_amount: float, from_position: Vector2) -> void:
+	if health.current <= 0.0:
+		return   # chết rồi thì _on_died lo
+	var msg := {}
+	if from_position != Vector2.ZERO:
+		msg["from_x"] = from_position.x
+	machine.change_to(&"Hurt", msg)
+
+
+func _on_died() -> void:
+	machine.change_to(&"Dead")
+	died.emit()

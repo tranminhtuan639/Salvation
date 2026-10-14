@@ -1,27 +1,32 @@
-[gd_scene load_steps=21 format=3]
+[gd_scene format=3 uid="uid://d800atf5kklg"]
 
-[ext_resource type="Script" path="res://entities/player/player.gd" id="p"]
-[ext_resource type="Script" path="res://scripts/core/hitbox.gd" id="hitbox"]
-[ext_resource type="Script" path="res://scripts/core/hurtbox.gd" id="hurtbox"]
-[ext_resource type="Script" path="res://scripts/core/health_component.gd" id="health"]
-[ext_resource type="Script" path="res://scripts/core/cooldowns.gd" id="cd"]
-[ext_resource type="Script" path="res://scripts/core/input_buffer.gd" id="ib"]
-[ext_resource type="Script" path="res://scripts/core/state_machine.gd" id="sm"]
-[ext_resource type="Script" path="res://entities/player/states/idle.gd" id="idle"]
-[ext_resource type="Script" path="res://entities/player/states/run.gd" id="run"]
-[ext_resource type="Script" path="res://entities/player/states/air.gd" id="air"]
-[ext_resource type="Script" path="res://entities/player/states/dash.gd" id="dash"]
-[ext_resource type="Script" path="res://entities/player/states/attack_state.gd" id="atk"]
-[ext_resource type="Script" path="res://entities/player/states/skill_water.gd" id="water"]
-[ext_resource type="Script" path="res://entities/player/states/skill_earth.gd" id="earth"]
-[ext_resource type="Script" path="res://entities/player/states/skill_fire.gd" id="fire"]
+[ext_resource type="Script" uid="uid://do5nh0qyvm8c0" path="res://entities/player/states/hurt.gd" id="16_3wlsy"]
+[ext_resource type="Script" uid="uid://ok6hr2mysslk" path="res://entities/player/states/dead.gd" id="17_b2kln"]
+[ext_resource type="Script" uid="uid://deoosdwputvtb" path="res://entities/player/states/air.gd" id="air"]
+[ext_resource type="Script" uid="uid://s1tkki8qvnve" path="res://entities/player/states/attack_state.gd" id="atk"]
+[ext_resource type="Script" uid="uid://brrohrlmicuih" path="res://scripts/core/cooldowns.gd" id="cd"]
+[ext_resource type="Script" uid="uid://d21l165elqpgh" path="res://entities/player/states/dash.gd" id="dash"]
+[ext_resource type="Script" uid="uid://dcvptwrhdut0t" path="res://entities/player/states/skill_earth.gd" id="earth"]
+[ext_resource type="Script" uid="uid://pgywa84exss6" path="res://entities/player/states/skill_fire.gd" id="fire"]
+[ext_resource type="Script" uid="uid://jg0nvl12bjeh" path="res://scripts/core/health_component.gd" id="health"]
+[ext_resource type="Script" uid="uid://dffj5onrph8w" path="res://scripts/core/hitbox.gd" id="hitbox"]
+[ext_resource type="Script" uid="uid://dc40uyhgyjsem" path="res://scripts/core/hurtbox.gd" id="hurtbox"]
+[ext_resource type="Script" uid="uid://yi7vdi14t4ep" path="res://scripts/core/input_buffer.gd" id="ib"]
+[ext_resource type="Script" uid="uid://fhytucg4iqn7" path="res://entities/player/states/idle.gd" id="idle"]
+[ext_resource type="Script" uid="uid://cph83gdtdoddh" path="res://entities/player/player.gd" id="p"]
+[ext_resource type="Script" uid="uid://bsmfhob8q0y3g" path="res://entities/player/states/run.gd" id="run"]
+[ext_resource type="Script" uid="uid://1w2onmrw061i" path="res://scripts/core/state_machine.gd" id="sm"]
+[ext_resource type="Script" uid="uid://dimv2axtpv54f" path="res://entities/player/states/skill_water.gd" id="water"]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_body"]
+radius = 26.0
+height = 115.0
 
 [sub_resource type="Gradient" id="Gradient_ph"]
 colors = PackedColorArray(0.3, 0.6, 0.9, 1, 0.3, 0.6, 0.9, 1)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_ph"]
 gradient = SubResource("Gradient_ph")
-width = 64
 height = 115
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ph"]
@@ -30,122 +35,106 @@ animations = [{
 "duration": 1.0,
 "texture": SubResource("GradientTexture2D_ph")
 }],
-"loop": true,
-"name": &"idle",
-"speed": 5.0
-},
-{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("GradientTexture2D_ph")
-}],
-"loop": true,
-"name": &"run",
-"speed": 5.0
-},
-{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("GradientTexture2D_ph")
-}],
-"loop": false,
-"name": &"jump",
-"speed": 5.0
-},
-{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("GradientTexture2D_ph")
-}],
-"loop": false,
-"name": &"dash",
-"speed": 5.0
-},
-{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("GradientTexture2D_ph")
-}],
-"loop": false,
+"loop": 0,
 "name": &"attack1",
 "speed": 5.0
-},
-{
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("GradientTexture2D_ph")
 }],
-"loop": false,
+"loop": 0,
 "name": &"attack2",
 "speed": 5.0
-},
-{
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("GradientTexture2D_ph")
 }],
-"loop": false,
+"loop": 0,
 "name": &"attack3",
 "speed": 5.0
-},
-{
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("GradientTexture2D_ph")
 }],
-"loop": false,
-"name": &"skill_wind",
+"loop": 0,
+"name": &"dash",
 "speed": 5.0
-},
-{
+}, {
 "frames": [{
 "duration": 1.0,
 "texture": SubResource("GradientTexture2D_ph")
 }],
-"loop": false,
-"name": &"skill_water",
-"speed": 5.0
-},
-{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("GradientTexture2D_ph")
-}],
-"loop": false,
-"name": &"skill_earth",
-"speed": 5.0
-},
-{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("GradientTexture2D_ph")
-}],
-"loop": false,
-"name": &"skill_fire",
-"speed": 5.0
-},
-{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("GradientTexture2D_ph")
-}],
-"loop": false,
-"name": &"hurt",
-"speed": 5.0
-},
-{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("GradientTexture2D_ph")
-}],
-"loop": false,
+"loop": 0,
 "name": &"dead",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("GradientTexture2D_ph")
+}],
+"loop": 0,
+"name": &"hurt",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("GradientTexture2D_ph")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("GradientTexture2D_ph")
+}],
+"loop": 0,
+"name": &"jump",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("GradientTexture2D_ph")
+}],
+"loop": 1,
+"name": &"run",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("GradientTexture2D_ph")
+}],
+"loop": 0,
+"name": &"skill_earth",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("GradientTexture2D_ph")
+}],
+"loop": 0,
+"name": &"skill_fire",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("GradientTexture2D_ph")
+}],
+"loop": 0,
+"name": &"skill_water",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("GradientTexture2D_ph")
+}],
+"loop": 0,
+"name": &"skill_wind",
+"speed": 5.0
 }]
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_body"]
-radius = 26.0
-height = 115.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hit"]
 size = Vector2(128, 77)
@@ -153,157 +142,137 @@ size = Vector2(128, 77)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hurt"]
 size = Vector2(52, 115)
 
-[node name="Player" type="CharacterBody2D"]
+[node name="Player" type="CharacterBody2D" unique_id=1624685722]
 collision_layer = 2
-collision_mask = 1
 script = ExtResource("p")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=358898449]
 position = Vector2(0, -57.5)
 shape = SubResource("CapsuleShape2D_body")
 
-[node name="Pivot" type="Node2D" parent="."]
+[node name="Pivot" type="Node2D" parent="." unique_id=1424314259]
 
-[node name="Sprite" type="AnimatedSprite2D" parent="Pivot"]
+[node name="Sprite" type="AnimatedSprite2D" parent="Pivot" unique_id=224170151]
 position = Vector2(0, -57.5)
 sprite_frames = SubResource("SpriteFrames_ph")
 animation = &"idle"
 
-[node name="Hitbox" type="Area2D" parent="Pivot"]
+[node name="Hitbox" type="Area2D" parent="Pivot" unique_id=1561714235]
 collision_layer = 32
 collision_mask = 16
 script = ExtResource("hitbox")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/Hitbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/Hitbox" unique_id=558419351]
 shape = SubResource("RectangleShape2D_hit")
 
-[node name="Hurtbox" type="Area2D" parent="."]
+[node name="Hurtbox" type="Area2D" parent="." unique_id=1375105651]
 collision_layer = 8
 collision_mask = 0
 script = ExtResource("hurtbox")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=1720745748]
 position = Vector2(0, -57.5)
 shape = SubResource("RectangleShape2D_hurt")
 
-[node name="Health" type="Node" parent="."]
+[node name="Health" type="Node" parent="." unique_id=858724234]
 script = ExtResource("health")
 
-[node name="Cooldowns" type="Node" parent="."]
+[node name="Cooldowns" type="Node" parent="." unique_id=1851761897]
 script = ExtResource("cd")
 
-[node name="InputBuffer" type="Node" parent="."]
+[node name="InputBuffer" type="Node" parent="." unique_id=576355636]
 script = ExtResource("ib")
 
-[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+[node name="StateMachine" type="Node" parent="." unique_id=614023980 node_paths=PackedStringArray("initial_state")]
 script = ExtResource("sm")
 initial_state = NodePath("Idle")
 
-[node name="Idle" type="Node" parent="StateMachine"]
+[node name="Idle" type="Node" parent="StateMachine" unique_id=728974897]
 script = ExtResource("idle")
 
-[node name="Run" type="Node" parent="StateMachine"]
+[node name="Run" type="Node" parent="StateMachine" unique_id=1832377274]
 script = ExtResource("run")
 
-[node name="Air" type="Node" parent="StateMachine"]
+[node name="Air" type="Node" parent="StateMachine" unique_id=1753699281]
 script = ExtResource("air")
 
-[node name="Dash" type="Node" parent="StateMachine"]
+[node name="Dash" type="Node" parent="StateMachine" unique_id=605850775]
 script = ExtResource("dash")
 
-[node name="Attack1" type="Node" parent="StateMachine"]
+[node name="Attack1" type="Node" parent="StateMachine" unique_id=1236967328]
 script = ExtResource("atk")
-anim = &"attack1"
-config_prefix = "player.attack1"
 startup = 0.08
 active = 0.08
 recovery = 0.2
-hitbox_size = Vector2(2.0, 1.2)
-hitbox_offset = Vector2(1.2, -0.9)
 lunge = 0.3
-dash_cancel_ratio = 0
 allow_skill_cancel = true
 next_attack = &"Attack2"
 
-[node name="Attack2" type="Node" parent="StateMachine"]
+[node name="Attack2" type="Node" parent="StateMachine" unique_id=217673686]
 script = ExtResource("atk")
 anim = &"attack2"
 config_prefix = "player.attack2"
 startup = 0.08
 active = 0.08
 recovery = 0.2
-hitbox_size = Vector2(2.0, 1.2)
-hitbox_offset = Vector2(1.2, -0.9)
 lunge = 0.3
-dash_cancel_ratio = 0
 allow_skill_cancel = true
 next_attack = &"Attack3"
 
-[node name="Attack3" type="Node" parent="StateMachine"]
+[node name="Attack3" type="Node" parent="StateMachine" unique_id=94078934]
 script = ExtResource("atk")
 anim = &"attack3"
 config_prefix = "player.attack3"
-startup = 0.1
-active = 0.1
 recovery = 0.3
-hitbox_size = Vector2(2.0, 1.2)
-hitbox_offset = Vector2(1.2, -0.9)
 lunge = 0.5
-dash_cancel_ratio = 0
 allow_skill_cancel = true
 
-[node name="SkillWind" type="Node" parent="StateMachine"]
+[node name="SkillWind" type="Node" parent="StateMachine" unique_id=2027670620]
 script = ExtResource("atk")
 anim = &"skill_wind"
 config_prefix = "skill.wind"
 cooldown_id = &"skill_wind"
-startup = 0.1
-active = 0.1
-recovery = 0.25
-hitbox_size = Vector2(3.0, 0.6)
+hitbox_size = Vector2(3, 0.6)
 hitbox_offset = Vector2(1.8, -0.9)
 lunge = 2.0
 dash_cancel_ratio = 0.5
-allow_skill_cancel = false
 
-[node name="SkillWater" type="Node" parent="StateMachine"]
+[node name="SkillWater" type="Node" parent="StateMachine" unique_id=1812661615]
 script = ExtResource("water")
 anim = &"skill_water"
 config_prefix = "skill.water"
 cooldown_id = &"skill_water"
 startup = 0.15
-active = 0.1
 recovery = 0.3
 hitbox_size = Vector2(2.5, 1.2)
 hitbox_offset = Vector2(1.4, -0.9)
-lunge = 0.0
 dash_cancel_ratio = 0.5
-allow_skill_cancel = false
 
-[node name="SkillEarth" type="Node" parent="StateMachine"]
+[node name="SkillEarth" type="Node" parent="StateMachine" unique_id=406075928]
 script = ExtResource("earth")
 anim = &"skill_earth"
 config_prefix = "skill.earth"
 cooldown_id = &"skill_earth"
-startup = 0.1
 active = 0.25
 recovery = 0.35
 hitbox_size = Vector2(4.4, 2.2)
-hitbox_offset = Vector2(0.0, -1.1)
-lunge = 0.0
+hitbox_offset = Vector2(0, -1.1)
 dash_cancel_ratio = 1.0
-allow_skill_cancel = false
 
-[node name="SkillFire" type="Node" parent="StateMachine"]
+[node name="SkillFire" type="Node" parent="StateMachine" unique_id=652548291]
 script = ExtResource("fire")
 anim = &"skill_fire"
 config_prefix = "skill.fire"
 cooldown_id = &"skill_fire"
-startup = 0.1
 active = 0.3
 recovery = 0.3
 hitbox_size = Vector2(2.5, 1.5)
 hitbox_offset = Vector2(1.3, -0.9)
 lunge = 0.5
 dash_cancel_ratio = 1.0
-allow_skill_cancel = false
+
+[node name="Hurt" type="Node" parent="StateMachine" unique_id=1366074347]
+script = ExtResource("16_3wlsy")
+
+[node name="Dead" type="Node" parent="StateMachine" unique_id=1348054756]
+script = ExtResource("17_b2kln")

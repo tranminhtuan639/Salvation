@@ -15,6 +15,10 @@ func set_invulnerable(source: StringName, on: bool) -> void:
 func is_invulnerable() -> bool:
 	return not _invuln.is_empty()
 
+## Hỏi riêng một nguồn (vd &"hurt" để nhấp nháy khi bị đánh).
+func has_invuln(source: StringName) -> bool:
+	return _invuln.has(source)
+
 ## Trả true nếu đòn thực sự gây sát thương.
 func receive_hit(hitbox: Hitbox) -> bool:
 	if is_invulnerable() or health == null:

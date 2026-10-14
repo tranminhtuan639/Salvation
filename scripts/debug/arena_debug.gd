@@ -1,5 +1,6 @@
 extends Node2D
-## DEBUG TẠM cho test_arena. Xóa khi làm HUD thật.
+## DEBUG TẠM cho test_arena (gắn vào node gốc TestArena). HUD thật đã có, file này chỉ để test.
+## Phím: T = player ăn 30 dmg (đẩy lùi khỏi dummy), Y = player ăn 500 dmg (thử chết), R = reset dummy.
 
 @onready var player: Player = $Player
 @onready var dummy = $Dummy
@@ -9,18 +10,13 @@ func _ready() -> void:
 	var layer := CanvasLayer.new()
 	add_child(layer)
 	_label = Label.new()
-	_label.position = Vector2(16, 12)
+	_label.position = Vector2(900, 12)   # góc phải, tránh đè HUD ở góc trái
 	layer.add_child(_label)
 
 func _process(_delta: float) -> void:
 	var p := player
-	var s := "HP %d / %d\nState: %s\nMiễn sát thương: %s\nBuff x%.1f\n" % [
-		p.health.current, p.health.max_hp, p.machine.current.name,
-		p.hurtbox.is_invulnerable(), p.damage_mult]
-	for id in [&"dash", &"skill_wind", &"skill_water", &"skill_earth", &"skill_fire"]:
-		s += "%s: %.1fs\n" % [id, p.cooldowns.remaining(id)]
-	s += "\n[T] player ăn 30 dmg   [R] reset dummy"
-	_label.text = s
+	_label.text = "State: %s\nMiễn sát thương: %s\nBuff x%.1f (%.1fs)\n\n[T] ăn 30 dmg  [Y] chết  [R] reset dummy" % [
+		p.machine.current.name, p.hurtbox.is_invulnerable(), p.damage_mult, p.buff_time_left]
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventKey and event.pressed and not event.echo:
@@ -29,6 +25,8 @@ func _unhandled_input(event: InputEvent) -> void:
 				if player.hurtbox.is_invulnerable():
 					print("Player đang miễn sát thương -> không mất máu")
 				else:
-					player.health.take_damage(30.0)
+					player.health.take_damage(30.0, dummy.global_position)
+			KEY_Y:
+				player.health.take_damage(500.0, dummy.global_position)
 			KEY_R:
 				dummy.health.setup(200.0)
