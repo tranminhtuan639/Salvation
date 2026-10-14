@@ -15,5 +15,5 @@ func physics_update(delta: float) -> void:
 	e.apply_gravity(delta)
 	e.velocity.x = move_toward(e.velocity.x, 0.0, e.move_speed * 10.0 * delta)
 	e.move_and_slide()
-	if _t >= e.cfg("recover", 0.7):
+	if _t >= e.cfg("recover", 0.7) / e.attack_speed_mult:
 		machine.change_to(&"Chase")

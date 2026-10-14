@@ -8,6 +8,7 @@ signal damage_received(actual: float)   # HP thực sự bị trừ (không tín
 
 @export var config_prefix := "enemy.grunt"
 @export var body_height := 100.0   # px, để đặt thanh máu / dấu "!" phía trên đầu
+@export var show_world_hp_bar := true   # boss tắt đi vì đã có thanh máu lớn trên HUD
 
 @onready var pivot: Node2D = $Pivot
 @onready var sprite: AnimatedSprite2D = $Pivot/Sprite
@@ -18,6 +19,8 @@ signal damage_received(actual: float)   # HP thực sự bị trừ (không tín
 
 var facing := 1
 var move_speed := 0.0
+## Nhân tốc độ ra đòn (>1 = nhanh hơn): chia thời gian telegraph/recover, nhân tốc độ lao. Boss Brute tăng khi enrage.
+var attack_speed_mult := 1.0
 var gravity := 0.0
 var target: Player
 var _hp_prev := 0.0
@@ -96,7 +99,7 @@ func _draw() -> void:
 	if health == null or health.current <= 0.0:
 		return
 	var top := -body_height - 18.0
-	if health.current < health.max_hp:   # thanh máu chỉ hiện khi đã bị đánh
+	if show_world_hp_bar and health.current < health.max_hp:   # thanh máu chỉ hiện khi đã bị đánh
 		var w := 60.0
 		draw_rect(Rect2(-w / 2.0, top, w, 6.0), Color(0, 0, 0, 0.7))
 		draw_rect(Rect2(-w / 2.0, top, w * health.current / health.max_hp, 6.0), Color(0.85, 0.2, 0.25))

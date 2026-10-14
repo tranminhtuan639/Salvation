@@ -9,7 +9,7 @@ var _dur := 0.5
 func enter(_msg: Dictionary = {}) -> void:
 	var e := enemy
 	_t = 0.0
-	_dur = e.cfg("telegraph", 0.5)
+	_dur = e.cfg("telegraph", 0.5) / e.attack_speed_mult
 	e.velocity.x = 0.0
 	e.face(e.dx_to_target())
 	e.alert = true
