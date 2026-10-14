@@ -4,6 +4,7 @@ extends CharacterBody2D
 ## "enemy.grunt" -> enemy.grunt.hp, enemy.grunt.damage, ...  (xem cfg())
 
 signal died(enemy: Enemy)
+signal damage_received(actual: float)   # HP thực sự bị trừ (không tính phần dư khi bị đánh quá tay)
 
 @export var config_prefix := "enemy.grunt"
 @export var body_height := 100.0   # px, để đặt thanh máu / dấu "!" phía trên đầu
@@ -19,6 +20,7 @@ var facing := 1
 var move_speed := 0.0
 var gravity := 0.0
 var target: Player
+var _hp_prev := 0.0
 
 ## Telegraph bật cờ này để vẽ dấu "!" báo hiệu đòn sắp tới.
 var alert := false:
@@ -32,10 +34,13 @@ func _ready() -> void:
 	move_speed = cfg("move_speed", 3.0) * Config.PX_PER_UNIT
 	gravity = Config.get_value("enemy.gravity", 35.0) * Config.PX_PER_UNIT
 	health.setup(cfg("hp", 50.0))
+	_hp_prev = health.max_hp
 	hurtbox.health = health
 	health.damaged.connect(_on_damaged)
 	health.died.connect(_on_died)
-	health.changed.connect(func(_c: float, _m: float) -> void: queue_redraw())
+	health.changed.connect(func(c: float, _m: float) -> void:
+		_hp_prev = c   # `changed` phát SAU `damaged`, nên trong _on_damaged _hp_prev vẫn là máu trước đòn
+		queue_redraw())
 	machine.setup(self)
 
 
@@ -75,7 +80,8 @@ func apply_gravity(delta: float) -> void:
 		velocity.y += gravity * delta
 
 
-func _on_damaged(_amount: float, from_position: Vector2) -> void:
+func _on_damaged(amount: float, from_position: Vector2) -> void:
+	damage_received.emit(minf(amount, _hp_prev))
 	if health.current <= 0.0:
 		return   # chết rồi thì _on_died lo
 	machine.change_to(&"Hurt", {"from_x": from_position.x})

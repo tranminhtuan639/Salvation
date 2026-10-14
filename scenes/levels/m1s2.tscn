@@ -1,0 +1,272 @@
+[gd_scene format=3 uid="uid://b1oxede6qda8q"]
+
+[ext_resource type="Script" uid="uid://v5ho1kfcos8r" path="res://scenes/levels/level.gd" id="1_level"]
+[ext_resource type="Script" uid="uid://c7eq3ju0x3taw" path="res://scripts/core/follow_camera.gd" id="2_cam"]
+[ext_resource type="PackedScene" uid="uid://d800atf5kklg" path="res://entities/player/player.tscn" id="3_player"]
+[ext_resource type="PackedScene" path="res://entities/enemies/grunt/grunt.tscn" id="4_grunt"]
+[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="5_hud"]
+[ext_resource type="PackedScene" path="res://entities/enemies/archer/archer.tscn" id="6_archer"]
+
+[sub_resource type="Gradient" id="Gradient_sky"]
+colors = PackedColorArray(0.1, 0.05, 0.1, 1, 0.24, 0.12, 0.14, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_sky"]
+gradient = SubResource("Gradient_sky")
+width = 4
+height = 256
+fill_to = Vector2(0, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_floor"]
+size = Vector2(6600, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall"]
+size = Vector2(64, 2000)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_plat"]
+size = Vector2(240, 20)
+
+[node name="M1S2" type="Node2D" unique_id=201058577]
+script = ExtResource("1_level")
+stage_id = "m1s2"
+
+[node name="Background" type="CanvasLayer" parent="." unique_id=303714061]
+layer = -10
+
+[node name="Sky" type="TextureRect" parent="Background" unique_id=429369478]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_sky")
+expand_mode = 1
+
+[node name="Decor" type="Node2D" parent="." unique_id=108973124]
+z_index = -5
+
+[node name="Pillar0" type="ColorRect" parent="Decor" unique_id=374754598]
+offset_left = 250.0
+offset_top = 276.0
+offset_right = 346.0
+offset_bottom = 618.0
+mouse_filter = 2
+color = Color(0.17, 0.09, 0.11, 1)
+
+[node name="Pillar1" type="ColorRect" parent="Decor" unique_id=681904708]
+offset_left = 806.0
+offset_top = 211.0
+offset_right = 916.0
+offset_bottom = 618.0
+mouse_filter = 2
+color = Color(0.17, 0.09, 0.11, 1)
+
+[node name="Pillar2" type="ColorRect" parent="Decor" unique_id=612592841]
+offset_left = 1258.0
+offset_top = 196.0
+offset_right = 1341.0
+offset_bottom = 618.0
+mouse_filter = 2
+color = Color(0.17, 0.09, 0.11, 1)
+
+[node name="Pillar3" type="ColorRect" parent="Decor" unique_id=1864478359]
+offset_left = 1840.0
+offset_top = 197.0
+offset_right = 1942.0
+offset_bottom = 618.0
+mouse_filter = 2
+color = Color(0.17, 0.09, 0.11, 1)
+
+[node name="Pillar4" type="ColorRect" parent="Decor" unique_id=724470656]
+offset_left = 2266.0
+offset_top = 189.0
+offset_right = 2369.0
+offset_bottom = 618.0
+mouse_filter = 2
+color = Color(0.17, 0.09, 0.11, 1)
+
+[node name="Pillar5" type="ColorRect" parent="Decor" unique_id=1418586129]
+offset_left = 2706.0
+offset_top = 117.0
+offset_right = 2776.0
+offset_bottom = 618.0
+mouse_filter = 2
+color = Color(0.17, 0.09, 0.11, 1)
+
+[node name="Pillar6" type="ColorRect" parent="Decor" unique_id=873506349]
+offset_left = 3089.0
+offset_top = 224.0
+offset_right = 3196.0
+offset_bottom = 618.0
+mouse_filter = 2
+color = Color(0.17, 0.09, 0.11, 1)
+
+[node name="Pillar7" type="ColorRect" parent="Decor" unique_id=1010816603]
+offset_left = 3578.0
+offset_top = 301.0
+offset_right = 3657.0
+offset_bottom = 618.0
+mouse_filter = 2
+color = Color(0.17, 0.09, 0.11, 1)
+
+[node name="Pillar8" type="ColorRect" parent="Decor" unique_id=1732652385]
+offset_left = 4161.0
+offset_top = 126.0
+offset_right = 4245.0
+offset_bottom = 618.0
+mouse_filter = 2
+color = Color(0.17, 0.09, 0.11, 1)
+
+[node name="Pillar9" type="ColorRect" parent="Decor" unique_id=1815855962]
+offset_left = 4776.0
+offset_top = 259.0
+offset_right = 4890.0
+offset_bottom = 618.0
+mouse_filter = 2
+color = Color(0.17, 0.09, 0.11, 1)
+
+[node name="Pillar10" type="ColorRect" parent="Decor" unique_id=690789961]
+offset_left = 5166.0
+offset_top = 207.0
+offset_right = 5283.0
+offset_bottom = 618.0
+mouse_filter = 2
+color = Color(0.17, 0.09, 0.11, 1)
+
+[node name="Pillar11" type="ColorRect" parent="Decor" unique_id=1447905219]
+offset_left = 5743.0
+offset_top = 214.0
+offset_right = 5852.0
+offset_bottom = 618.0
+mouse_filter = 2
+color = Color(0.17, 0.09, 0.11, 1)
+
+[node name="Pillar12" type="ColorRect" parent="Decor" unique_id=1346936634]
+offset_left = 6236.0
+offset_top = 310.0
+offset_right = 6327.0
+offset_bottom = 618.0
+mouse_filter = 2
+color = Color(0.17, 0.09, 0.11, 1)
+
+[node name="Floor" type="StaticBody2D" parent="." unique_id=1494601105]
+position = Vector2(3200, 650)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor" unique_id=1447525939]
+shape = SubResource("RectangleShape2D_floor")
+
+[node name="Visual" type="ColorRect" parent="Floor" unique_id=1590645359]
+offset_left = -3300.0
+offset_top = -32.0
+offset_right = 3300.0
+offset_bottom = 32.0
+mouse_filter = 2
+color = Color(0.28, 0.2, 0.22, 1)
+
+[node name="WallL" type="StaticBody2D" parent="." unique_id=1447009806]
+position = Vector2(-32, 0)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallL" unique_id=1212282012]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="WallR" type="StaticBody2D" parent="." unique_id=1199098386]
+position = Vector2(6432, 0)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallR" unique_id=683311225]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="Platform0" type="StaticBody2D" parent="." unique_id=74678336]
+position = Vector2(2100, 498)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform0" unique_id=2127212930]
+shape = SubResource("RectangleShape2D_plat")
+one_way_collision = true
+
+[node name="Visual" type="ColorRect" parent="Platform0" unique_id=687920029]
+offset_left = -120.0
+offset_top = -10.0
+offset_right = 120.0
+offset_bottom = 10.0
+mouse_filter = 2
+color = Color(0.45, 0.33, 0.36, 1)
+
+[node name="Platform1" type="StaticBody2D" parent="." unique_id=1281866272]
+position = Vector2(3400, 498)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform1" unique_id=2007541654]
+shape = SubResource("RectangleShape2D_plat")
+one_way_collision = true
+
+[node name="Visual" type="ColorRect" parent="Platform1" unique_id=537678171]
+offset_left = -120.0
+offset_top = -10.0
+offset_right = 120.0
+offset_bottom = 10.0
+mouse_filter = 2
+color = Color(0.45, 0.33, 0.36, 1)
+
+[node name="Platform2" type="StaticBody2D" parent="." unique_id=989786022]
+position = Vector2(4900, 498)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform2" unique_id=1240935693]
+shape = SubResource("RectangleShape2D_plat")
+one_way_collision = true
+
+[node name="Visual" type="ColorRect" parent="Platform2" unique_id=226057224]
+offset_left = -120.0
+offset_top = -10.0
+offset_right = 120.0
+offset_bottom = 10.0
+mouse_filter = 2
+color = Color(0.45, 0.33, 0.36, 1)
+
+[node name="Enemies" type="Node2D" parent="." unique_id=676194269]
+
+[node name="Archer1" parent="Enemies" unique_id=1406569254 instance=ExtResource("6_archer")]
+position = Vector2(1400, 618)
+
+[node name="Grunt1" parent="Enemies" unique_id=542132236 instance=ExtResource("4_grunt")]
+position = Vector2(2600, 618)
+
+[node name="Archer2" parent="Enemies" unique_id=900496273 instance=ExtResource("6_archer")]
+position = Vector2(3000, 618)
+
+[node name="Archer3" parent="Enemies" unique_id=1372740867 instance=ExtResource("6_archer")]
+position = Vector2(3800, 618)
+
+[node name="Grunt2" parent="Enemies" unique_id=1915614094 instance=ExtResource("4_grunt")]
+position = Vector2(4200, 618)
+
+[node name="Archer4" parent="Enemies" unique_id=961535883 instance=ExtResource("6_archer")]
+position = Vector2(4600, 618)
+
+[node name="Grunt3" parent="Enemies" unique_id=1174679505 instance=ExtResource("4_grunt")]
+position = Vector2(5300, 618)
+
+[node name="Archer5" parent="Enemies" unique_id=178582309 instance=ExtResource("6_archer")]
+position = Vector2(5500, 618)
+
+[node name="Grunt4" parent="Enemies" unique_id=1922778844 instance=ExtResource("4_grunt")]
+position = Vector2(5800, 618)
+
+[node name="Player" parent="." unique_id=186713164 instance=ExtResource("3_player")]
+position = Vector2(200, 618)
+
+[node name="Camera" type="Camera2D" parent="." unique_id=1865985054]
+position = Vector2(640, 360)
+process_callback = 0
+limit_left = 0
+limit_top = 0
+limit_right = 6400
+limit_bottom = 720
+position_smoothing_enabled = true
+position_smoothing_speed = 8.0
+script = ExtResource("2_cam")
+
+[node name="Hud" parent="." unique_id=1071069256 instance=ExtResource("5_hud")]

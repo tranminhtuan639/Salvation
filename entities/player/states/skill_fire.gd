@@ -23,6 +23,8 @@ func physics_update(delta: float) -> void:
 	var p := player
 	_t += delta
 	p.apply_gravity(delta)
+	if can_turn:
+		_turn_to_input()   # quay lưng giữa loạt chém để quét sang phía bên kia
 
 	var in_active := _t >= startup and _t < startup + active
 	if in_active:

@@ -13,6 +13,7 @@ extends PlayerState
 @export_range(0.0, 1.0) var dash_cancel_ratio := 0.0   # 0 = hủy dash ngay sau active, 1 = sau hết recovery
 @export var allow_skill_cancel := false         # đánh thường: true, skill: false
 @export var next_attack: StringName = &""      # nối combo
+@export var can_turn := true                    # giữ phím hướng ngược lại khi đang đánh thì quay mặt
 
 var _t := 0.0
 var _total := 0.0
@@ -38,16 +39,19 @@ func physics_update(delta: float) -> void:
 	var p := player
 	_t += delta
 	p.apply_gravity(delta)
+	if can_turn:
+		_turn_to_input()
 
 	var in_active := _t >= startup and _t < startup + active
 	if in_active and not _armed:
 		_armed = true
 		p.hitbox.arm(Config.get_value(config_prefix + ".damage") * p.damage_mult)
-		p.velocity.x = p.facing * lunge * Config.PX_PER_UNIT / maxf(active, 0.01)
 	elif _t >= startup + active and _armed:
 		_armed = false
 		p.hitbox.disarm()
 		p.velocity.x = 0.0
+	if in_active:   # tính mỗi frame để lao theo hướng MỚI nếu vừa quay mặt
+		p.velocity.x = p.facing * lunge * Config.PX_PER_UNIT / maxf(active, 0.01)
 
 	p.move_and_slide()
 
@@ -56,6 +60,13 @@ func physics_update(delta: float) -> void:
 		return
 	if _try_cancel():
 		return
+
+
+## Giữ phím hướng khác với hướng đang quay mặt thì quay lại (hitbox nằm trong Pivot nên lật theo).
+func _turn_to_input() -> void:
+	var dir := player.get_move_input()
+	if dir != 0.0 and (dir > 0.0) != (player.facing > 0):
+		player.face(dir)
 
 
 func exit() -> void:

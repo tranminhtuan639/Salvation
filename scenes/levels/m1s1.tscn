@@ -1,0 +1,279 @@
+[gd_scene load_steps=12 format=3]
+
+[ext_resource type="Script" path="res://scenes/levels/level.gd" id="1_level"]
+[ext_resource type="Script" path="res://scripts/core/follow_camera.gd" id="2_cam"]
+[ext_resource type="PackedScene" path="res://entities/player/player.tscn" id="3_player"]
+[ext_resource type="PackedScene" path="res://entities/enemies/grunt/grunt.tscn" id="4_grunt"]
+[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="5_hud"]
+
+[sub_resource type="Gradient" id="Gradient_sky"]
+colors = PackedColorArray(0.05, 0.06, 0.12, 1, 0.16, 0.12, 0.2, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_sky"]
+gradient = SubResource("Gradient_sky")
+width = 4
+height = 256
+fill_from = Vector2(0, 0)
+fill_to = Vector2(0, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_floor"]
+size = Vector2(6600, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall"]
+size = Vector2(64, 2000)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_plat"]
+size = Vector2(240, 20)
+
+[node name="M1S1" type="Node2D"]
+script = ExtResource("1_level")
+stage_id = "m1s1"
+
+[node name="Background" type="CanvasLayer" parent="."]
+layer = -10
+
+[node name="Sky" type="TextureRect" parent="Background"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_sky")
+expand_mode = 1
+
+[node name="Decor" type="Node2D" parent="."]
+z_index = -5
+[node name="Pillar0" type="ColorRect" parent="Decor"]
+offset_left = 250.0
+offset_top = 236.0
+offset_right = 329.0
+offset_bottom = 618.0
+mouse_filter = 2
+color = Color(0.11, 0.1, 0.17, 1)
+
+[node name="Pillar1" type="ColorRect" parent="Decor"]
+offset_left = 731.0
+offset_top = 152.0
+offset_right = 804.0
+offset_bottom = 618.0
+mouse_filter = 2
+color = Color(0.11, 0.1, 0.17, 1)
+
+[node name="Pillar2" type="ColorRect" parent="Decor"]
+offset_left = 1129.0
+offset_top = 108.0
+offset_right = 1233.0
+offset_bottom = 618.0
+mouse_filter = 2
+color = Color(0.11, 0.1, 0.17, 1)
+
+[node name="Pillar3" type="ColorRect" parent="Decor"]
+offset_left = 1533.0
+offset_top = 225.0
+offset_right = 1640.0
+offset_bottom = 618.0
+mouse_filter = 2
+color = Color(0.11, 0.1, 0.17, 1)
+
+[node name="Pillar4" type="ColorRect" parent="Decor"]
+offset_left = 1927.0
+offset_top = 189.0
+offset_right = 2010.0
+offset_bottom = 618.0
+mouse_filter = 2
+color = Color(0.11, 0.1, 0.17, 1)
+
+[node name="Pillar5" type="ColorRect" parent="Decor"]
+offset_left = 2316.0
+offset_top = 296.0
+offset_right = 2413.0
+offset_bottom = 618.0
+mouse_filter = 2
+color = Color(0.11, 0.1, 0.17, 1)
+
+[node name="Pillar6" type="ColorRect" parent="Decor"]
+offset_left = 2803.0
+offset_top = 301.0
+offset_right = 2888.0
+offset_bottom = 618.0
+mouse_filter = 2
+color = Color(0.11, 0.1, 0.17, 1)
+
+[node name="Pillar7" type="ColorRect" parent="Decor"]
+offset_left = 3206.0
+offset_top = 177.0
+offset_right = 3303.0
+offset_bottom = 618.0
+mouse_filter = 2
+color = Color(0.11, 0.1, 0.17, 1)
+
+[node name="Pillar8" type="ColorRect" parent="Decor"]
+offset_left = 3601.0
+offset_top = 107.0
+offset_right = 3707.0
+offset_bottom = 618.0
+mouse_filter = 2
+color = Color(0.11, 0.1, 0.17, 1)
+
+[node name="Pillar9" type="ColorRect" parent="Decor"]
+offset_left = 4012.0
+offset_top = 261.0
+offset_right = 4122.0
+offset_bottom = 618.0
+mouse_filter = 2
+color = Color(0.11, 0.1, 0.17, 1)
+
+[node name="Pillar10" type="ColorRect" parent="Decor"]
+offset_left = 4552.0
+offset_top = 169.0
+offset_right = 4625.0
+offset_bottom = 618.0
+mouse_filter = 2
+color = Color(0.11, 0.1, 0.17, 1)
+
+[node name="Pillar11" type="ColorRect" parent="Decor"]
+offset_left = 5079.0
+offset_top = 169.0
+offset_right = 5174.0
+offset_bottom = 618.0
+mouse_filter = 2
+color = Color(0.11, 0.1, 0.17, 1)
+
+[node name="Pillar12" type="ColorRect" parent="Decor"]
+offset_left = 5471.0
+offset_top = 262.0
+offset_right = 5543.0
+offset_bottom = 618.0
+mouse_filter = 2
+color = Color(0.11, 0.1, 0.17, 1)
+
+[node name="Pillar13" type="ColorRect" parent="Decor"]
+offset_left = 5993.0
+offset_top = 99.0
+offset_right = 6071.0
+offset_bottom = 618.0
+mouse_filter = 2
+color = Color(0.11, 0.1, 0.17, 1)
+
+[node name="Floor" type="StaticBody2D" parent="."]
+position = Vector2(3200, 650)
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+shape = SubResource("RectangleShape2D_floor")
+
+[node name="Visual" type="ColorRect" parent="Floor"]
+offset_left = -3300.0
+offset_top = -32.0
+offset_right = 3300.0
+offset_bottom = 32.0
+mouse_filter = 2
+color = Color(0.22, 0.2, 0.28, 1)
+
+[node name="WallL" type="StaticBody2D" parent="."]
+position = Vector2(-32, 0)
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallL"]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="WallR" type="StaticBody2D" parent="."]
+position = Vector2(6432, 0)
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallR"]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="Platform0" type="StaticBody2D" parent="."]
+position = Vector2(1900, 498)
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform0"]
+shape = SubResource("RectangleShape2D_plat")
+one_way_collision = true
+
+[node name="Visual" type="ColorRect" parent="Platform0"]
+offset_left = -120.0
+offset_top = -10.0
+offset_right = 120.0
+offset_bottom = 10.0
+mouse_filter = 2
+color = Color(0.4, 0.36, 0.48, 1)
+
+[node name="Platform1" type="StaticBody2D" parent="."]
+position = Vector2(3300, 498)
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform1"]
+shape = SubResource("RectangleShape2D_plat")
+one_way_collision = true
+
+[node name="Visual" type="ColorRect" parent="Platform1"]
+offset_left = -120.0
+offset_top = -10.0
+offset_right = 120.0
+offset_bottom = 10.0
+mouse_filter = 2
+color = Color(0.4, 0.36, 0.48, 1)
+
+[node name="Platform2" type="StaticBody2D" parent="."]
+position = Vector2(4800, 498)
+collision_layer = 1
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform2"]
+shape = SubResource("RectangleShape2D_plat")
+one_way_collision = true
+
+[node name="Visual" type="ColorRect" parent="Platform2"]
+offset_left = -120.0
+offset_top = -10.0
+offset_right = 120.0
+offset_bottom = 10.0
+mouse_filter = 2
+color = Color(0.4, 0.36, 0.48, 1)
+
+[node name="Enemies" type="Node2D" parent="."]
+
+[node name="Grunt1" parent="Enemies" instance=ExtResource("4_grunt")]
+position = Vector2(1300, 618)
+
+[node name="Grunt2" parent="Enemies" instance=ExtResource("4_grunt")]
+position = Vector2(2500, 618)
+
+[node name="Grunt3" parent="Enemies" instance=ExtResource("4_grunt")]
+position = Vector2(2750, 618)
+
+[node name="Grunt4" parent="Enemies" instance=ExtResource("4_grunt")]
+position = Vector2(3900, 618)
+
+[node name="Grunt5" parent="Enemies" instance=ExtResource("4_grunt")]
+position = Vector2(4150, 618)
+
+[node name="Grunt6" parent="Enemies" instance=ExtResource("4_grunt")]
+position = Vector2(5200, 618)
+
+[node name="Grunt7" parent="Enemies" instance=ExtResource("4_grunt")]
+position = Vector2(5450, 618)
+
+[node name="Player" parent="." instance=ExtResource("3_player")]
+position = Vector2(200, 618)
+
+[node name="Camera" type="Camera2D" parent="."]
+position = Vector2(640, 360)
+process_callback = 0
+limit_left = 0
+limit_top = 0
+limit_right = 6400
+limit_bottom = 720
+position_smoothing_enabled = true
+position_smoothing_speed = 8.0
+script = ExtResource("2_cam")
+
+[node name="Hud" parent="." instance=ExtResource("5_hud")]

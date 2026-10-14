@@ -19,8 +19,15 @@ const SLOT_DEFS := [
 @onready var _skills: HBoxContainer = $Root/Skills
 @onready var _game_over: Control = $Root/GameOver
 @onready var _retry: Button = $Root/GameOver/Center/Box/Retry
+@onready var _objective: Label = $Root/ObjectiveLabel
+@onready var _victory: Control = $Root/Victory
+@onready var _victory_stats: Label = $Root/Victory/Center/Box/Stats
+@onready var _victory_retry: Button = $Root/Victory/Center/Box/Retry
+@onready var _victory_status: Label = $Root/Victory/Center/Box/RunStatus
+@onready var _gameover_status: Label = $Root/GameOver/Center/Box/RunStatus
 
 var _player: Player
+var _run_status := ""
 var _slots: Array[Dictionary] = []
 var _hp_tween: Tween
 var _trail_tween: Tween
@@ -30,8 +37,12 @@ func _ready() -> void:
 	_style_bar(_hp_trail, Color(1.0, 0.85, 0.3), Color(0.08, 0.08, 0.1, 0.9))
 	_style_bar(_hp_bar, Color(0.85, 0.2, 0.25), Color(0, 0, 0, 0))   # nền trong suốt để thấy vệt trễ phía sau
 	_build_slots()
+	add_to_group(&"hud")   # Level tìm HUD qua group này
 	_game_over.hide()
+	_victory.hide()
 	_retry.pressed.connect(_on_retry)
+	_victory_retry.pressed.connect(_on_retry)
+	Runs.submitted.connect(_on_run_submitted)
 
 	await get_tree().process_frame   # đợi Player chạy xong _ready
 	_player = get_tree().get_first_node_in_group(&"player") as Player
@@ -137,10 +148,40 @@ func _outline(label: Label, font_size: int) -> void:
 	label.add_theme_color_override("font_outline_color", Color.BLACK)
 
 
+# ---------------- Mục tiêu & thắng stage ----------------
+
+func set_objective(text: String) -> void:
+	_objective.text = text
+	_objective.show()
+
+
+func show_victory(clear_time_ms: int, kills: int, total: int, hp_left: float) -> void:
+	var secs := clear_time_ms / 1000.0
+	_victory_stats.text = "Thời gian:  %02d:%04.1f\nHạ quái:  %d / %d\nMáu còn lại:  %d" % [
+		floori(secs / 60.0), fmod(secs, 60.0), kills, total, ceili(hp_left)]
+	if _run_status == "":
+		set_run_status("Đang nộp kết quả...")
+	_victory.show()
+	_victory_retry.grab_focus()
+
+
+func _on_run_submitted(text: String, _response: Dictionary) -> void:
+	set_run_status(text)
+
+
+## Dòng trạng thái nộp kết quả lên backend, hiện ở cả màn thắng lẫn màn thua.
+func set_run_status(text: String) -> void:
+	_run_status = text
+	_victory_status.text = text
+	_gameover_status.text = text
+
+
 # ---------------- Thua ----------------
 
 func _on_player_died() -> void:
 	await get_tree().create_timer(1.0).timeout   # cho xem nốt animation ngã
+	if _run_status == "":
+		set_run_status("Đang nộp kết quả...")
 	_game_over.show()
 	_retry.grab_focus()   # Enter / Space cũng bấm được
 
