@@ -195,7 +195,7 @@ script = ExtResource("cd")
 [node name="InputBuffer" type="Node" parent="."]
 script = ExtResource("ib")
 
-[node name="StateMachine" type="Node" parent="."]
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("sm")
 initial_state = NodePath("Idle")
 

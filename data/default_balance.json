@@ -11,7 +11,9 @@
   "player.attack1.damage": 8,
   "player.attack2.damage": 8,
   "player.attack3.damage": 12,
-
+  "player.hurt.stun": 0.25,
+  "player.hurt.iframes": 0.8,
+  "player.hurt.knockback": 4,
   "skill.wind.damage": 25,
   "skill.wind.cooldown": 5,
   "skill.water.damage": 18,

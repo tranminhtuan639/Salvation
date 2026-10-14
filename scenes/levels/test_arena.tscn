@@ -1,33 +1,34 @@
-[gd_scene load_steps=5 format=3]
+[gd_scene format=3 uid="uid://ckeiow78m3mbq"]
 
+[ext_resource type="Script" uid="uid://bex6cuici362i" path="res://scripts/debug/arena_debug.gd" id="1_3wevi"]
 [ext_resource type="PackedScene" path="res://entities/player/player.tscn" id="1_player"]
 [ext_resource type="PackedScene" path="res://entities/enemies/dummy/dummy.tscn" id="2_dummy"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_floor"]
 size = Vector2(3000, 64)
 
-[node name="TestArena" type="Node2D"]
+[node name="TestArena" type="Node2D" unique_id=1625147758]
+script = ExtResource("1_3wevi")
 
-[node name="Floor" type="StaticBody2D" parent="."]
+[node name="Floor" type="StaticBody2D" parent="." unique_id=735306293]
 position = Vector2(640, 650)
-collision_layer = 1
 collision_mask = 0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor" unique_id=1924635694]
 shape = SubResource("RectangleShape2D_floor")
 
-[node name="Visual" type="ColorRect" parent="Floor"]
+[node name="Visual" type="ColorRect" parent="Floor" unique_id=467304091]
 offset_left = -1500.0
 offset_top = -32.0
 offset_right = 1500.0
 offset_bottom = 32.0
 color = Color(0.25, 0.25, 0.3, 1)
 
-[node name="Player" parent="." instance=ExtResource("1_player")]
+[node name="Player" parent="." unique_id=711984519 instance=ExtResource("1_player")]
 position = Vector2(300, 618)
 
-[node name="Dummy" parent="." instance=ExtResource("2_dummy")]
+[node name="Dummy" parent="." unique_id=1715600991 instance=ExtResource("2_dummy")]
 position = Vector2(700, 618)
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" type="Camera2D" parent="." unique_id=27633641]
 position = Vector2(640, 360)

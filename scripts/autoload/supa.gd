@@ -1,8 +1,8 @@
 extends Node
 ## Gọi REST của Supabase: Auth, PostgREST, Edge Functions.
 
-const SUPABASE_URL := "https://YOUR-PROJECT-ID.supabase.co"
-const API_KEY := "YOUR-ANON-OR-PUBLISHABLE-KEY"  # key CÔNG KHAI. KHÔNG BAO GIỜ đặt service_role ở đây.
+const SUPABASE_URL := "https://ibiblfxzbcrojziquqhn.supabase.co"
+const API_KEY := "sb_publishable_VnAlkosk0jUjnIry2PtOsQ_EfPmd2h8"
 const SESSION_PATH := "user://session.cfg"
 
 signal signed_in
