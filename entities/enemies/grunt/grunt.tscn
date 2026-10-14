@@ -1,0 +1,151 @@
+[gd_scene load_steps=19 format=3]
+
+[ext_resource type="Script" path="res://entities/enemies/enemy.gd" id="enemy"]
+[ext_resource type="Script" path="res://scripts/core/hitbox.gd" id="hitbox"]
+[ext_resource type="Script" path="res://scripts/core/hurtbox.gd" id="hurtbox"]
+[ext_resource type="Script" path="res://scripts/core/health_component.gd" id="health"]
+[ext_resource type="Script" path="res://scripts/core/state_machine.gd" id="sm"]
+[ext_resource type="Script" path="res://entities/enemies/states/idle.gd" id="idle"]
+[ext_resource type="Script" path="res://entities/enemies/states/chase.gd" id="chase"]
+[ext_resource type="Script" path="res://entities/enemies/states/telegraph.gd" id="telegraph"]
+[ext_resource type="Script" path="res://entities/enemies/states/attack.gd" id="attack"]
+[ext_resource type="Script" path="res://entities/enemies/states/recover.gd" id="recover"]
+[ext_resource type="Script" path="res://entities/enemies/states/hurt.gd" id="hurt"]
+[ext_resource type="Script" path="res://entities/enemies/states/dead.gd" id="dead"]
+
+[sub_resource type="Gradient" id="Gradient_ph"]
+colors = PackedColorArray(0.35, 0.65, 0.3, 1, 0.35, 0.65, 0.3, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ph"]
+gradient = SubResource("Gradient_ph")
+width = 52
+height = 100
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ph"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("GradientTexture2D_ph")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+},
+{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("GradientTexture2D_ph")
+}],
+"loop": true,
+"name": &"run",
+"speed": 5.0
+},
+{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("GradientTexture2D_ph")
+}],
+"loop": false,
+"name": &"telegraph",
+"speed": 5.0
+},
+{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("GradientTexture2D_ph")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 5.0
+},
+{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("GradientTexture2D_ph")
+}],
+"loop": false,
+"name": &"hurt",
+"speed": 5.0
+},
+{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("GradientTexture2D_ph")
+}],
+"loop": false,
+"name": &"dead",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_body"]
+radius = 22.0
+height = 100.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hit"]
+size = Vector2(90, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hurt"]
+size = Vector2(48, 100)
+
+[node name="Grunt" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 1
+script = ExtResource("enemy")
+config_prefix = "enemy.grunt"
+body_height = 100.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -50)
+shape = SubResource("CapsuleShape2D_body")
+
+[node name="Pivot" type="Node2D" parent="."]
+
+[node name="Sprite" type="AnimatedSprite2D" parent="Pivot"]
+position = Vector2(0, -50)
+sprite_frames = SubResource("SpriteFrames_ph")
+animation = &"idle"
+
+[node name="Hitbox" type="Area2D" parent="Pivot"]
+collision_layer = 64
+collision_mask = 8
+script = ExtResource("hitbox")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/Hitbox"]
+shape = SubResource("RectangleShape2D_hit")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("hurtbox")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(0, -50)
+shape = SubResource("RectangleShape2D_hurt")
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("health")
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("sm")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("idle")
+
+[node name="Chase" type="Node" parent="StateMachine"]
+script = ExtResource("chase")
+
+[node name="Telegraph" type="Node" parent="StateMachine"]
+script = ExtResource("telegraph")
+
+[node name="Attack" type="Node" parent="StateMachine"]
+script = ExtResource("attack")
+
+[node name="Recover" type="Node" parent="StateMachine"]
+script = ExtResource("recover")
+
+[node name="Hurt" type="Node" parent="StateMachine"]
+script = ExtResource("hurt")
+
+[node name="Dead" type="Node" parent="StateMachine"]
+script = ExtResource("dead")
