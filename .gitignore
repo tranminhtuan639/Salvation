@@ -1,0 +1,17 @@
+# Godot 4
+.godot/
+*.translation
+export_presets.cfg
+export_credentials.cfg
+/build/
+/export/
+
+# Secrets: KHÔNG commit key thật
+.env
+*.secret.*
+
+# OS / IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

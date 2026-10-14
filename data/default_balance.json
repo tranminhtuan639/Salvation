@@ -1,0 +1,28 @@
+{
+  "player.hp": 100,
+  "player.move_speed": 6,
+  "player.gravity": 35,
+  "player.jump_height": 3,
+  "player.dash.distance": 4,
+  "player.dash.duration": 0.25,
+  "player.dash.iframes": 0.25,
+  "player.dash.cooldown": 0.8,
+
+  "player.attack1.damage": 8,
+  "player.attack2.damage": 8,
+  "player.attack3.damage": 12,
+
+  "skill.wind.damage": 25,
+  "skill.wind.cooldown": 5,
+  "skill.water.damage": 18,
+  "skill.water.heal": 15,
+  "skill.water.cooldown": 12,
+  "skill.earth.damage": 22,
+  "skill.earth.invuln": 0.7,
+  "skill.earth.cooldown": 14,
+  "skill.fire.damage": 14,
+  "skill.fire.hits": 4,
+  "skill.fire.buff_mult": 1.3,
+  "skill.fire.buff_duration": 8,
+  "skill.fire.cooldown": 22
+}
