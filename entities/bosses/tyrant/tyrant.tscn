@@ -1,0 +1,195 @@
+[gd_scene load_steps=29 format=3]
+
+[ext_resource type="Script" path="res://entities/bosses/tyrant/tyrant.gd" id="enemy"]
+[ext_resource type="Script" path="res://scripts/core/hitbox.gd" id="hitbox"]
+[ext_resource type="Script" path="res://scripts/core/hurtbox.gd" id="hurtbox"]
+[ext_resource type="Script" path="res://scripts/core/health_component.gd" id="health"]
+[ext_resource type="Script" path="res://scripts/core/state_machine.gd" id="sm"]
+[ext_resource type="Script" path="res://entities/enemies/states/idle.gd" id="idle"]
+[ext_resource type="Script" path="res://entities/bosses/tyrant/states/tyrant_chase.gd" id="chase"]
+[ext_resource type="Script" path="res://entities/bosses/tyrant/states/tyrant_telegraph.gd" id="telegraph"]
+[ext_resource type="Script" path="res://entities/bosses/tyrant/states/tyrant_combo.gd" id="combo"]
+[ext_resource type="Script" path="res://entities/bosses/tyrant/states/tyrant_quake.gd" id="quake"]
+[ext_resource type="Script" path="res://entities/bosses/tyrant/states/tyrant_rend.gd" id="rend"]
+[ext_resource type="Script" path="res://entities/bosses/tyrant/states/tyrant_wrath.gd" id="wrath"]
+[ext_resource type="Script" path="res://entities/bosses/tyrant/states/tyrant_stagger.gd" id="stagger"]
+[ext_resource type="Script" path="res://entities/bosses/tyrant/states/tyrant_ascend.gd" id="ascend"]
+[ext_resource type="Script" path="res://entities/enemies/states/recover.gd" id="recover"]
+[ext_resource type="Script" path="res://entities/enemies/states/hurt.gd" id="hurt"]
+[ext_resource type="Script" path="res://entities/enemies/states/dead.gd" id="dead"]
+
+[sub_resource type="Gradient" id="Gradient_ph"]
+colors = PackedColorArray(0.9, 0.9, 0.9, 1, 0.9, 0.9, 0.9, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_ph"]
+gradient = SubResource("Gradient_ph")
+width = 64
+height = 110
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ph"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("GradientTexture2D_ph")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 5.0
+},
+{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("GradientTexture2D_ph")
+}],
+"loop": true,
+"name": &"run",
+"speed": 5.0
+},
+{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("GradientTexture2D_ph")
+}],
+"loop": false,
+"name": &"telegraph",
+"speed": 5.0
+},
+{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("GradientTexture2D_ph")
+}],
+"loop": false,
+"name": &"attack",
+"speed": 5.0
+},
+{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("GradientTexture2D_ph")
+}],
+"loop": false,
+"name": &"hurt",
+"speed": 5.0
+},
+{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("GradientTexture2D_ph")
+}],
+"loop": false,
+"name": &"dead",
+"speed": 5.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_body"]
+radius = 34.0
+height = 176.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_spin"]
+resource_local_to_scene = true
+radius = 224.0
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hit"]
+size = Vector2(160, 96)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hurt"]
+size = Vector2(80, 176)
+
+[node name="Tyrant" type="CharacterBody2D"]
+collision_layer = 4
+collision_mask = 1
+script = ExtResource("enemy")
+config_prefix = "enemy.tyrant"
+body_height = 176.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -88)
+shape = SubResource("CapsuleShape2D_body")
+
+[node name="Pivot" type="Node2D" parent="."]
+
+[node name="Sprite" type="AnimatedSprite2D" parent="Pivot"]
+position = Vector2(0, -88)
+scale = Vector2(1.6, 1.6)
+sprite_frames = SubResource("SpriteFrames_ph")
+animation = &"idle"
+
+[node name="Sword" type="ColorRect" parent="Pivot"]
+offset_left = 31.0
+offset_top = -170.0
+offset_right = 41.0
+offset_bottom = -70.0
+pivot_offset = Vector2(5, 100)
+rotation = 0.436332
+mouse_filter = 2
+color = Color(0.78, 0.8, 0.95, 1)
+
+[node name="Hitbox" type="Area2D" parent="Pivot"]
+collision_layer = 64
+collision_mask = 8
+script = ExtResource("hitbox")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/Hitbox"]
+shape = SubResource("RectangleShape2D_hit")
+
+[node name="SpinHitbox" type="Area2D" parent="Pivot"]
+collision_layer = 64
+collision_mask = 8
+script = ExtResource("hitbox")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/SpinHitbox"]
+position = Vector2(0, -88)
+shape = SubResource("CircleShape2D_spin")
+
+[node name="Hurtbox" type="Area2D" parent="."]
+collision_layer = 16
+collision_mask = 0
+script = ExtResource("hurtbox")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
+position = Vector2(0, -88)
+shape = SubResource("RectangleShape2D_hurt")
+
+[node name="Health" type="Node" parent="."]
+script = ExtResource("health")
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("sm")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine"]
+script = ExtResource("idle")
+
+[node name="Chase" type="Node" parent="StateMachine"]
+script = ExtResource("chase")
+
+[node name="Telegraph" type="Node" parent="StateMachine"]
+script = ExtResource("telegraph")
+
+[node name="Combo" type="Node" parent="StateMachine"]
+script = ExtResource("combo")
+
+[node name="Quake" type="Node" parent="StateMachine"]
+script = ExtResource("quake")
+
+[node name="Rend" type="Node" parent="StateMachine"]
+script = ExtResource("rend")
+
+[node name="Wrath" type="Node" parent="StateMachine"]
+script = ExtResource("wrath")
+
+[node name="Stagger" type="Node" parent="StateMachine"]
+script = ExtResource("stagger")
+
+[node name="Ascend" type="Node" parent="StateMachine"]
+script = ExtResource("ascend")
+
+[node name="Recover" type="Node" parent="StateMachine"]
+script = ExtResource("recover")
+
+[node name="Hurt" type="Node" parent="StateMachine"]
+script = ExtResource("hurt")
+
+[node name="Dead" type="Node" parent="StateMachine"]
+script = ExtResource("dead")

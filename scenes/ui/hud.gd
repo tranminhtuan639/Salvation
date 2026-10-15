@@ -36,9 +36,13 @@ var _boss_bar: ProgressBar
 var _boss_trail: ProgressBar
 var _boss_name: Label
 var _boss_hp_label: Label
+var _boss_mark: ColorRect
+var _boss_w := BOSS_BAR_W
 var _boss_tween: Tween
 var _boss_trail_tween: Tween
 var _run_status := ""
+var _next_scene := ""
+var _next_btn: Button
 var _slots: Array[Dictionary] = []
 var _hp_tween: Tween
 var _trail_tween: Tween
@@ -130,14 +134,14 @@ func _build_boss_bar() -> void:
 	_boss_root.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_boss_root.anchor_left = 0.5
 	_boss_root.anchor_right = 0.5
-	_boss_root.offset_left = -BOSS_BAR_W / 2.0
-	_boss_root.offset_right = BOSS_BAR_W / 2.0
+	_boss_root.offset_left = -_boss_w / 2.0
+	_boss_root.offset_right = _boss_w / 2.0
 	_boss_root.offset_top = 14.0
 	_boss_root.offset_bottom = 14.0 + 26.0 + BOSS_BAR_H
 	$Root.add_child(_boss_root)
 
 	_boss_name = Label.new()
-	_boss_name.size = Vector2(BOSS_BAR_W, 26.0)
+	_boss_name.size = Vector2(_boss_w, 26.0)
 	_boss_name.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_outline(_boss_name, 20)
 	_boss_root.add_child(_boss_name)
@@ -145,16 +149,16 @@ func _build_boss_bar() -> void:
 	_boss_trail = _make_boss_bar(Color(1.0, 0.85, 0.3), Color(0.08, 0.08, 0.1, 0.9))
 	_boss_bar = _make_boss_bar(Color(0.8, 0.12, 0.2), Color(0, 0, 0, 0))
 
-	var mark := ColorRect.new()   # vạch 50% máu: dưới mức này boss enrage
-	mark.color = Color(1, 1, 1, 0.6)
-	mark.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	mark.position = Vector2(BOSS_BAR_W * 0.5 - 1.0, 26.0)
-	mark.size = Vector2(2.0, BOSS_BAR_H)
-	_boss_root.add_child(mark)
+	_boss_mark = ColorRect.new()   # vạch 50% máu: dưới mức này boss enrage / sang phase 2
+	_boss_mark.color = Color(1, 1, 1, 0.6)
+	_boss_mark.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_boss_mark.position = Vector2(_boss_w * 0.5 - 1.0, 26.0)
+	_boss_mark.size = Vector2(2.0, BOSS_BAR_H)
+	_boss_root.add_child(_boss_mark)
 
 	_boss_hp_label = Label.new()
 	_boss_hp_label.position = Vector2(0, 26.0)
-	_boss_hp_label.size = Vector2(BOSS_BAR_W, BOSS_BAR_H)
+	_boss_hp_label.size = Vector2(_boss_w, BOSS_BAR_H)
 	_boss_hp_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	_boss_hp_label.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
 	_outline(_boss_hp_label, 14)
@@ -167,7 +171,7 @@ func _build_boss_bar() -> void:
 func _make_boss_bar(fill: Color, background: Color) -> ProgressBar:
 	var bar := ProgressBar.new()
 	bar.position = Vector2(0, 26.0)
-	bar.size = Vector2(BOSS_BAR_W, BOSS_BAR_H)
+	bar.size = Vector2(_boss_w, BOSS_BAR_H)
 	bar.show_percentage = false
 	bar.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	_style_bar(bar, fill, background)
@@ -185,6 +189,11 @@ func _poll_boss() -> void:
 	_boss = b
 	var n: Variant = b.get(&"boss_name")
 	_boss_name.text = str(n) if n != null else "BOSS"
+	var w: Variant = b.get(&"boss_bar_width")   # boss nào cần thanh to hơn thì khai báo boss_bar_width
+	_set_boss_bar_width(float(w) if w != null else BOSS_BAR_W)
+	_style_bar(_boss_bar, Color(0.8, 0.12, 0.2), Color(0, 0, 0, 0))
+	if b.has_signal(&"phase_changed"):
+		b.connect(&"phase_changed", _on_boss_phase_changed)
 	_apply_boss_hp(b.health.current, b.health.max_hp, true)
 	b.health.changed.connect(func(c: float, m: float) -> void: _apply_boss_hp(c, m, false))
 	b.died.connect(_on_boss_died)
@@ -193,6 +202,29 @@ func _poll_boss() -> void:
 			_show_boss_bar())
 	if b.machine.current != null and b.machine.current.name != &"Idle":
 		_show_boss_bar()
+
+
+func _set_boss_bar_width(w: float) -> void:
+	_boss_w = w
+	_boss_root.offset_left = -w / 2.0
+	_boss_root.offset_right = w / 2.0
+	_boss_name.size.x = w
+	_boss_hp_label.size.x = w
+	_boss_bar.size.x = w
+	_boss_trail.size.x = w
+	_boss_mark.position.x = w * 0.5 - 1.0
+
+
+## Boss nhiều phase: đổi tên theo phase (boss.phase_title()), thanh máu chuyển vàng, tên chớp sáng.
+func _on_boss_phase_changed(_phase: int) -> void:
+	if _boss == null or not is_instance_valid(_boss):
+		return
+	if _boss.has_method(&"phase_title"):
+		_boss_name.text = _boss.call(&"phase_title")
+	_style_bar(_boss_bar, Color(1.0, 0.78, 0.15), Color(0, 0, 0, 0))
+	var tw := create_tween()
+	tw.tween_property(_boss_name, "modulate", Color(1.0, 0.9, 0.3), 0.15)
+	tw.tween_property(_boss_name, "modulate", Color.WHITE, 0.6)
 
 
 func _show_boss_bar() -> void:
@@ -283,8 +315,30 @@ func show_victory(clear_time_ms: int, kills: int, total: int, hp_left: float) ->
 		floori(secs / 60.0), fmod(secs, 60.0), kills, total, ceili(hp_left)]
 	if _run_status == "":
 		set_run_status("Đang nộp kết quả...")
+	if _next_scene != "" and _next_btn == null:
+		_next_btn = Button.new()
+		_next_btn.text = "Tiếp tục"
+		_next_btn.custom_minimum_size = Vector2(200, 48)
+		_next_btn.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+		var box := _victory_retry.get_parent()
+		box.add_child(_next_btn)
+		box.move_child(_next_btn, _victory_retry.get_index())   # "Tiếp tục" nằm trên "Chơi lại"
+		_next_btn.pressed.connect(_on_next)
 	_victory.show()
-	_victory_retry.grab_focus()
+	if _next_btn != null:
+		_next_btn.grab_focus()
+	else:
+		_victory_retry.grab_focus()
+
+
+## Level gọi khi có scene kế tiếp: màn thắng sẽ hiện nút "Tiếp tục".
+func set_next_scene(path: String) -> void:
+	_next_scene = path
+
+
+func _on_next() -> void:
+	Engine.time_scale = 1.0
+	get_tree().change_scene_to_file(_next_scene)
 
 
 func _on_run_submitted(text: String, _response: Dictionary) -> void:

@@ -1,0 +1,138 @@
+[gd_scene format=3]
+
+[ext_resource type="Texture2D" path="res://assets/backgrounds/forest/01_sky.png" id="1_01_sky"]
+[ext_resource type="Texture2D" path="res://assets/backgrounds/forest/02_haze.png" id="2_02_haze"]
+[ext_resource type="Texture2D" path="res://assets/backgrounds/forest/03_far.png" id="3_03_far"]
+[ext_resource type="Texture2D" path="res://assets/backgrounds/forest/04_lights_far.png" id="4_04_lights_far"]
+[ext_resource type="Texture2D" path="res://assets/backgrounds/forest/05_mid_far.png" id="5_05_mid_far"]
+[ext_resource type="Texture2D" path="res://assets/backgrounds/forest/06_mid.png" id="6_06_mid"]
+[ext_resource type="Texture2D" path="res://assets/backgrounds/forest/07_lights_near.png" id="7_07_lights_near"]
+[ext_resource type="Texture2D" path="res://assets/backgrounds/forest/08_near.png" id="8_08_near"]
+[ext_resource type="Texture2D" path="res://assets/backgrounds/forest/09_canopy.png" id="9_09_canopy"]
+[ext_resource type="Texture2D" path="res://assets/backgrounds/forest/10_ground.png" id="10_10_ground"]
+[ext_resource type="Texture2D" path="res://assets/backgrounds/forest/11_grass.png" id="11_11_grass"]
+
+[node name="ForestBackground" type="Node2D"]
+z_index = -20
+texture_filter = 1
+
+[node name="Sky" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0, 1)
+repeat_size = Vector2(1856, 0)
+repeat_times = 2
+
+[node name="Sprite" type="Sprite2D" parent="Sky"]
+position = Vector2(0, -828)
+scale = Vector2(2, 2)
+texture = ExtResource("1_01_sky")
+centered = false
+
+[node name="Haze" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.08, 1)
+repeat_size = Vector2(1856, 0)
+repeat_times = 2
+
+[node name="Sprite" type="Sprite2D" parent="Haze"]
+position = Vector2(0, -828)
+scale = Vector2(2, 2)
+texture = ExtResource("2_02_haze")
+centered = false
+
+[node name="Far" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.16, 1)
+repeat_size = Vector2(1856, 0)
+repeat_times = 2
+
+[node name="Sprite" type="Sprite2D" parent="Far"]
+position = Vector2(0, -828)
+scale = Vector2(2, 2)
+texture = ExtResource("3_03_far")
+centered = false
+
+[node name="LightsFar" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.22, 1)
+repeat_size = Vector2(1856, 0)
+repeat_times = 2
+
+[node name="Sprite" type="Sprite2D" parent="LightsFar"]
+position = Vector2(0, -828)
+scale = Vector2(2, 2)
+texture = ExtResource("4_04_lights_far")
+centered = false
+
+[node name="MidFar" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.3, 1)
+repeat_size = Vector2(1856, 0)
+repeat_times = 2
+
+[node name="Sprite" type="Sprite2D" parent="MidFar"]
+position = Vector2(0, -828)
+scale = Vector2(2, 2)
+texture = ExtResource("5_05_mid_far")
+centered = false
+
+[node name="Mid" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.42, 1)
+repeat_size = Vector2(1856, 0)
+repeat_times = 2
+
+[node name="Sprite" type="Sprite2D" parent="Mid"]
+position = Vector2(0, -828)
+scale = Vector2(2, 2)
+texture = ExtResource("6_06_mid")
+centered = false
+
+[node name="LightsNear" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.5, 1)
+repeat_size = Vector2(1856, 0)
+repeat_times = 2
+
+[node name="Sprite" type="Sprite2D" parent="LightsNear"]
+position = Vector2(0, -828)
+scale = Vector2(2, 2)
+texture = ExtResource("7_07_lights_near")
+centered = false
+
+[node name="Near" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.62, 1)
+repeat_size = Vector2(1856, 0)
+repeat_times = 2
+
+[node name="Sprite" type="Sprite2D" parent="Near"]
+position = Vector2(0, -828)
+scale = Vector2(2, 2)
+texture = ExtResource("8_08_near")
+centered = false
+
+[node name="Canopy" type="Parallax2D" parent="."]
+scroll_scale = Vector2(0.8, 1)
+repeat_size = Vector2(1856, 0)
+repeat_times = 2
+
+[node name="Sprite" type="Sprite2D" parent="Canopy"]
+position = Vector2(0, -828)
+scale = Vector2(2, 2)
+texture = ExtResource("9_09_canopy")
+centered = false
+
+[node name="Ground" type="Parallax2D" parent="."]
+scroll_scale = Vector2(1, 1)
+repeat_size = Vector2(1856, 0)
+repeat_times = 2
+
+[node name="Sprite" type="Sprite2D" parent="Ground"]
+position = Vector2(0, -828)
+scale = Vector2(2, 2)
+texture = ExtResource("10_10_ground")
+centered = false
+
+[node name="Grass" type="Parallax2D" parent="."]
+scroll_scale = Vector2(1, 1)
+repeat_size = Vector2(1856, 0)
+repeat_times = 2
+
+[node name="Sprite" type="Sprite2D" parent="Grass"]
+position = Vector2(0, -828)
+scale = Vector2(2, 2)
+texture = ExtResource("11_11_grass")
+centered = false

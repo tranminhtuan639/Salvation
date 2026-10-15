@@ -1,10 +1,11 @@
-[gd_scene load_steps=12 format=3]
+[gd_scene load_steps=13 format=3]
 
 [ext_resource type="Script" path="res://scenes/levels/level.gd" id="1_level"]
 [ext_resource type="Script" path="res://scripts/core/follow_camera.gd" id="2_cam"]
 [ext_resource type="PackedScene" path="res://entities/player/player.tscn" id="3_player"]
 [ext_resource type="PackedScene" path="res://entities/enemies/grunt/grunt.tscn" id="4_grunt"]
 [ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="5_hud"]
+[ext_resource type="PackedScene" path="res://scenes/levels/forest_background.tscn" id="9_forestbg"]
 
 [sub_resource type="Gradient" id="Gradient_sky"]
 colors = PackedColorArray(0.05, 0.06, 0.12, 1, 0.16, 0.12, 0.2, 1)
@@ -42,7 +43,11 @@ mouse_filter = 2
 texture = SubResource("GradientTexture2D_sky")
 expand_mode = 1
 
+[node name="ForestBackground" parent="." instance=ExtResource("9_forestbg")]
+modulate = Color(1, 1, 1, 1)
+
 [node name="Decor" type="Node2D" parent="."]
+visible = false
 z_index = -5
 [node name="Pillar0" type="ColorRect" parent="Decor"]
 offset_left = 250.0
@@ -165,6 +170,7 @@ collision_mask = 0
 shape = SubResource("RectangleShape2D_floor")
 
 [node name="Visual" type="ColorRect" parent="Floor"]
+visible = false
 offset_left = -3300.0
 offset_top = -32.0
 offset_right = 3300.0

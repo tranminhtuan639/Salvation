@@ -5,7 +5,8 @@ export_presets.cfg
 export_credentials.cfg
 /build/
 /export/
-
+assets/
+!assets/.gitkeep
 # Secrets: KHÔNG commit key thật
 .env
 *.secret.*

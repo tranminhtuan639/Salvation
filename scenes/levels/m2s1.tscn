@@ -1,0 +1,358 @@
+[gd_scene format=3 uid="uid://cgtxem0nj3siv"]
+
+[ext_resource type="Script" uid="uid://v5ho1kfcos8r" path="res://scenes/levels/level.gd" id="1_level"]
+[ext_resource type="Script" uid="uid://c7eq3ju0x3taw" path="res://scripts/core/follow_camera.gd" id="2_cam"]
+[ext_resource type="PackedScene" uid="uid://d800atf5kklg" path="res://entities/player/player.tscn" id="3_player"]
+[ext_resource type="PackedScene" path="res://entities/enemies/grunt/grunt.tscn" id="4_grunt"]
+[ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="5_hud"]
+[ext_resource type="PackedScene" path="res://entities/enemies/archer/archer.tscn" id="6_archer"]
+[ext_resource type="PackedScene" path="res://entities/enemies/brute/brute.tscn" id="7_brute"]
+[ext_resource type="PackedScene" path="res://scenes/levels/forest_background.tscn" id="8_650jl"]
+
+[sub_resource type="Gradient" id="Gradient_sky"]
+colors = PackedColorArray(0.05, 0.04, 0.12, 1, 0.16, 0.1, 0.22, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_sky"]
+gradient = SubResource("Gradient_sky")
+width = 4
+height = 256
+fill_to = Vector2(0, 1)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_floor"]
+size = Vector2(3400, 64)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_wall"]
+size = Vector2(64, 2000)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_plat"]
+size = Vector2(240, 20)
+
+[node name="M2S1" type="Node2D" unique_id=524516068]
+script = ExtResource("1_level")
+stage_id = "m2s1"
+next_scene = "res://scenes/levels/m2s2.tscn"
+creep_tint = Color(0.65, 0.85, 0.8, 1)
+
+[node name="Background" type="CanvasLayer" parent="." unique_id=830847791]
+layer = -10
+
+[node name="Sky" type="TextureRect" parent="Background" unique_id=336182273]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = SubResource("GradientTexture2D_sky")
+expand_mode = 1
+
+[node name="Decor" type="Node2D" parent="." unique_id=847740159]
+z_index = -5
+
+[node name="Ceiling" type="ColorRect" parent="Decor" unique_id=674799826]
+offset_right = 3200.0
+offset_bottom = 70.0
+mouse_filter = 2
+color = Color(0.06, 0.045, 0.09, 1)
+
+[node name="Pillar0" type="ColorRect" parent="Decor" unique_id=183764602]
+offset_left = 150.0
+offset_top = 190.0
+offset_right = 240.0
+offset_bottom = 618.0
+mouse_filter = 2
+color = Color(0.15, 0.09, 0.17, 1)
+
+[node name="Pillar1" type="ColorRect" parent="Decor" unique_id=2113742857]
+offset_left = 530.0
+offset_top = 210.0
+offset_right = 640.0
+offset_bottom = 618.0
+mouse_filter = 2
+color = Color(0.15, 0.09, 0.17, 1)
+
+[node name="Pillar2" type="ColorRect" parent="Decor" unique_id=409563987]
+offset_left = 910.0
+offset_top = 150.0
+offset_right = 1000.0
+offset_bottom = 618.0
+mouse_filter = 2
+color = Color(0.15, 0.09, 0.17, 1)
+
+[node name="Pillar3" type="ColorRect" parent="Decor" unique_id=1791842724]
+offset_left = 1290.0
+offset_top = 150.0
+offset_right = 1390.0
+offset_bottom = 618.0
+mouse_filter = 2
+color = Color(0.15, 0.09, 0.17, 1)
+
+[node name="Pillar4" type="ColorRect" parent="Decor" unique_id=416135354]
+offset_left = 1670.0
+offset_top = 150.0
+offset_right = 1780.0
+offset_bottom = 618.0
+mouse_filter = 2
+color = Color(0.15, 0.09, 0.17, 1)
+
+[node name="Pillar5" type="ColorRect" parent="Decor" unique_id=778592870]
+offset_left = 2050.0
+offset_top = 170.0
+offset_right = 2140.0
+offset_bottom = 618.0
+mouse_filter = 2
+color = Color(0.15, 0.09, 0.17, 1)
+
+[node name="Pillar6" type="ColorRect" parent="Decor" unique_id=682384539]
+offset_left = 2430.0
+offset_top = 150.0
+offset_right = 2530.0
+offset_bottom = 618.0
+mouse_filter = 2
+color = Color(0.15, 0.09, 0.17, 1)
+
+[node name="Pillar7" type="ColorRect" parent="Decor" unique_id=1033072574]
+offset_left = 2810.0
+offset_top = 210.0
+offset_right = 2900.0
+offset_bottom = 618.0
+mouse_filter = 2
+color = Color(0.15, 0.09, 0.17, 1)
+
+[node name="Pillar8" type="ColorRect" parent="Decor" unique_id=318873146]
+offset_left = 3190.0
+offset_top = 170.0
+offset_right = 3280.0
+offset_bottom = 618.0
+mouse_filter = 2
+color = Color(0.15, 0.09, 0.17, 1)
+
+[node name="Window0" type="ColorRect" parent="Decor" unique_id=47869094]
+offset_left = 305.0
+offset_top = 130.0
+offset_right = 375.0
+offset_bottom = 420.0
+mouse_filter = 2
+color = Color(0.22, 0.12, 0.36, 1)
+
+[node name="Window1" type="ColorRect" parent="Decor" unique_id=764209017]
+offset_left = 685.0
+offset_top = 130.0
+offset_right = 755.0
+offset_bottom = 420.0
+mouse_filter = 2
+color = Color(0.22, 0.12, 0.36, 1)
+
+[node name="Window2" type="ColorRect" parent="Decor" unique_id=717111963]
+offset_left = 1065.0
+offset_top = 130.0
+offset_right = 1135.0
+offset_bottom = 420.0
+mouse_filter = 2
+color = Color(0.22, 0.12, 0.36, 1)
+
+[node name="Window3" type="ColorRect" parent="Decor" unique_id=1871190108]
+offset_left = 1445.0
+offset_top = 130.0
+offset_right = 1515.0
+offset_bottom = 420.0
+mouse_filter = 2
+color = Color(0.22, 0.12, 0.36, 1)
+
+[node name="Window4" type="ColorRect" parent="Decor" unique_id=559939423]
+offset_left = 1825.0
+offset_top = 130.0
+offset_right = 1895.0
+offset_bottom = 420.0
+mouse_filter = 2
+color = Color(0.22, 0.12, 0.36, 1)
+
+[node name="Window5" type="ColorRect" parent="Decor" unique_id=1873395047]
+offset_left = 2205.0
+offset_top = 130.0
+offset_right = 2275.0
+offset_bottom = 420.0
+mouse_filter = 2
+color = Color(0.22, 0.12, 0.36, 1)
+
+[node name="Window6" type="ColorRect" parent="Decor" unique_id=2022286721]
+offset_left = 2585.0
+offset_top = 130.0
+offset_right = 2655.0
+offset_bottom = 420.0
+mouse_filter = 2
+color = Color(0.22, 0.12, 0.36, 1)
+
+[node name="Window7" type="ColorRect" parent="Decor" unique_id=349584759]
+offset_left = 2965.0
+offset_top = 130.0
+offset_right = 3035.0
+offset_bottom = 420.0
+mouse_filter = 2
+color = Color(0.22, 0.12, 0.36, 1)
+
+[node name="Gate" type="ColorRect" parent="Decor" unique_id=368260174]
+offset_left = 3130.0
+offset_top = 200.0
+offset_right = 3200.0
+offset_bottom = 618.0
+mouse_filter = 2
+color = Color(0.55, 0.42, 0.1, 1)
+
+[node name="Floor" type="StaticBody2D" parent="." unique_id=849158782]
+position = Vector2(1600, 650)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor" unique_id=707211767]
+shape = SubResource("RectangleShape2D_floor")
+
+[node name="Visual" type="ColorRect" parent="Floor" unique_id=773052067]
+offset_left = -1700.0
+offset_top = -32.0
+offset_right = 1700.0
+offset_bottom = 32.0
+mouse_filter = 2
+color = Color(0.22, 0.17, 0.25, 1)
+
+[node name="WallL" type="StaticBody2D" parent="." unique_id=358728967]
+position = Vector2(-32, 0)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallL" unique_id=1395356311]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="WallR" type="StaticBody2D" parent="." unique_id=976714245]
+position = Vector2(3232, 0)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="WallR" unique_id=1274407274]
+shape = SubResource("RectangleShape2D_wall")
+
+[node name="Platform0" type="StaticBody2D" parent="." unique_id=6086348]
+position = Vector2(700, 498)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform0" unique_id=1692865605]
+shape = SubResource("RectangleShape2D_plat")
+one_way_collision = true
+
+[node name="Visual" type="ColorRect" parent="Platform0" unique_id=459913494]
+offset_left = -120.0
+offset_top = -10.0
+offset_right = 120.0
+offset_bottom = 10.0
+mouse_filter = 2
+color = Color(0.4, 0.3, 0.4, 1)
+
+[node name="Platform1" type="StaticBody2D" parent="." unique_id=1756189345]
+position = Vector2(1500, 498)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform1" unique_id=2071545034]
+shape = SubResource("RectangleShape2D_plat")
+one_way_collision = true
+
+[node name="Visual" type="ColorRect" parent="Platform1" unique_id=1066562925]
+offset_left = -120.0
+offset_top = -10.0
+offset_right = 120.0
+offset_bottom = 10.0
+mouse_filter = 2
+color = Color(0.4, 0.3, 0.4, 1)
+
+[node name="Platform2" type="StaticBody2D" parent="." unique_id=2077167553]
+position = Vector2(2300, 498)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform2" unique_id=310807552]
+shape = SubResource("RectangleShape2D_plat")
+one_way_collision = true
+
+[node name="Visual" type="ColorRect" parent="Platform2" unique_id=1821027247]
+offset_left = -120.0
+offset_top = -10.0
+offset_right = 120.0
+offset_bottom = 10.0
+mouse_filter = 2
+color = Color(0.4, 0.3, 0.4, 1)
+
+[node name="Platform3" type="StaticBody2D" parent="." unique_id=885057004]
+position = Vector2(2900, 498)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform3" unique_id=978043177]
+shape = SubResource("RectangleShape2D_plat")
+one_way_collision = true
+
+[node name="Visual" type="ColorRect" parent="Platform3" unique_id=704833579]
+offset_left = -120.0
+offset_top = -10.0
+offset_right = 120.0
+offset_bottom = 10.0
+mouse_filter = 2
+color = Color(0.4, 0.3, 0.4, 1)
+
+[node name="Enemies" type="Node2D" parent="." unique_id=1876123605]
+
+[node name="Waves" type="Node2D" parent="." unique_id=1642705791]
+
+[node name="Wave1" type="Node2D" parent="Waves" unique_id=1967609405]
+
+[node name="Grunt1" parent="Waves/Wave1" unique_id=1274397148 instance=ExtResource("4_grunt")]
+position = Vector2(1100, 618)
+
+[node name="Grunt2" parent="Waves/Wave1" unique_id=729520036 instance=ExtResource("4_grunt")]
+position = Vector2(1300, 618)
+
+[node name="Archer3" parent="Waves/Wave1" unique_id=653241939 instance=ExtResource("6_archer")]
+position = Vector2(1650, 618)
+
+[node name="Wave2" type="Node2D" parent="Waves" unique_id=1824123566]
+
+[node name="Grunt1" parent="Waves/Wave2" unique_id=1569230447 instance=ExtResource("4_grunt")]
+position = Vector2(1850, 618)
+
+[node name="Brute2" parent="Waves/Wave2" unique_id=1328855722 instance=ExtResource("7_brute")]
+position = Vector2(2100, 618)
+
+[node name="Archer3" parent="Waves/Wave2" unique_id=815750826 instance=ExtResource("6_archer")]
+position = Vector2(2350, 618)
+
+[node name="Grunt4" parent="Waves/Wave2" unique_id=566465121 instance=ExtResource("4_grunt")]
+position = Vector2(2450, 618)
+
+[node name="Wave3" type="Node2D" parent="Waves" unique_id=1618247944]
+
+[node name="Grunt1" parent="Waves/Wave3" unique_id=1954770337 instance=ExtResource("4_grunt")]
+position = Vector2(2650, 618)
+
+[node name="Grunt2" parent="Waves/Wave3" unique_id=343563026 instance=ExtResource("4_grunt")]
+position = Vector2(2800, 618)
+
+[node name="Brute3" parent="Waves/Wave3" unique_id=1806779932 instance=ExtResource("7_brute")]
+position = Vector2(2900, 618)
+
+[node name="Archer4" parent="Waves/Wave3" unique_id=2050277021 instance=ExtResource("6_archer")]
+position = Vector2(3000, 618)
+
+[node name="Archer5" parent="Waves/Wave3" unique_id=587647834 instance=ExtResource("6_archer")]
+position = Vector2(3120, 618)
+
+[node name="Player" parent="." unique_id=694141549 instance=ExtResource("3_player")]
+position = Vector2(200, 618)
+
+[node name="Camera" type="Camera2D" parent="." unique_id=330304531]
+position = Vector2(640, 360)
+process_callback = 0
+limit_left = 0
+limit_top = 0
+limit_right = 3200
+limit_bottom = 720
+position_smoothing_enabled = true
+position_smoothing_speed = 8.0
+script = ExtResource("2_cam")
+
+[node name="Hud" parent="." unique_id=1394856917 instance=ExtResource("5_hud")]
+
+[node name="ForestBackground" parent="." unique_id=69702578 instance=ExtResource("8_650jl")]
+modulate = Color(0.85, 0.55, 0.62, 1)

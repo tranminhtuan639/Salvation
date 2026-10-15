@@ -6,6 +6,7 @@ const GRUNT := preload("res://entities/enemies/grunt/grunt.tscn")
 const ARCHER := preload("res://entities/enemies/archer/archer.tscn")
 const BRUTE := preload("res://entities/enemies/brute/brute.tscn")
 const BRUTE_BOSS := preload("res://entities/bosses/brute_boss/brute_boss.tscn")
+const TYRANT := preload("res://entities/bosses/tyrant/tyrant.tscn")
 
 @onready var player: Player = $Player
 @onready var dummy = $Dummy
@@ -20,7 +21,7 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	var p := player
-	_label.text = "State: %s\nMiễn sát thương: %s\nBuff x%.1f (%.1fs)\nQuái đang sống: %d\n\n[T] ăn 30 dmg  [Y] chết\n[R] reset dummy\n[G] Grunt  [H] Archer  [B] Brute  [N] Boss" % [
+	_label.text = "State: %s\nMiễn sát thương: %s\nBuff x%.1f (%.1fs)\nQuái đang sống: %d\n\n[T] ăn 30 dmg  [Y] chết\n[R] reset dummy\n[G] Grunt  [H] Archer  [B] Brute  [N] Boss  [M] Người Anh" % [
 		p.machine.current.name, p.hurtbox.is_invulnerable(), p.damage_mult, p.buff_time_left,
 		get_tree().get_nodes_in_group(&"enemy").size()]
 
@@ -44,6 +45,8 @@ func _unhandled_input(event: InputEvent) -> void:
 				_spawn(BRUTE)
 			KEY_N:
 				_spawn(BRUTE_BOSS)
+			KEY_M:
+				_spawn(TYRANT)
 
 ## Spawn ở phía xa hơn so với player, trong khung hình (camera đứng yên, rộng 1280).
 func _spawn(scene: PackedScene) -> void:
