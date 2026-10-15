@@ -26,6 +26,7 @@ const SLOT_DEFS := [
 @onready var _victory_status: Label = $Root/Victory/Center/Box/RunStatus
 @onready var _gameover_status: Label = $Root/GameOver/Center/Box/RunStatus
 
+const MENU_SCENE := "res://scenes/ui/main_menu.tscn"
 const BOSS_BAR_W := 520.0   # px, canh giữa phía trên (nằm lọt giữa máu player bên trái và mục tiêu bên phải)
 const BOSS_BAR_H := 22.0
 
@@ -42,7 +43,9 @@ var _boss_tween: Tween
 var _boss_trail_tween: Tween
 var _run_status := ""
 var _next_scene := ""
+var _next_text := "Stage tiếp"
 var _next_btn: Button
+var _victory_menu_btn: Button
 var _slots: Array[Dictionary] = []
 var _hp_tween: Tween
 var _trail_tween: Tween
@@ -58,6 +61,8 @@ func _ready() -> void:
 	_victory.hide()
 	_retry.pressed.connect(_on_retry)
 	_victory_retry.pressed.connect(_on_retry)
+	_add_menu_button(_retry.get_parent())
+	_victory_menu_btn = _add_menu_button(_victory_retry.get_parent())
 	Runs.submitted.connect(_on_run_submitted)
 
 	await get_tree().process_frame   # đợi Player chạy xong _ready
@@ -317,13 +322,14 @@ func show_victory(clear_time_ms: int, kills: int, total: int, hp_left: float) ->
 		set_run_status("Đang nộp kết quả...")
 	if _next_scene != "" and _next_btn == null:
 		_next_btn = Button.new()
-		_next_btn.text = "Tiếp tục"
+		_next_btn.text = _next_text
 		_next_btn.custom_minimum_size = Vector2(200, 48)
 		_next_btn.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
 		var box := _victory_retry.get_parent()
 		box.add_child(_next_btn)
 		box.move_child(_next_btn, _victory_retry.get_index())   # "Tiếp tục" nằm trên "Chơi lại"
 		_next_btn.pressed.connect(_on_next)
+	_victory_menu_btn.visible = _next_scene != MENU_SCENE   # nút "tiếp" đã dẫn về menu thì khỏi hiện trùng
 	_victory.show()
 	if _next_btn != null:
 		_next_btn.grab_focus()
@@ -331,9 +337,25 @@ func show_victory(clear_time_ms: int, kills: int, total: int, hp_left: float) ->
 		_victory_retry.grab_focus()
 
 
-## Level gọi khi có scene kế tiếp: màn thắng sẽ hiện nút "Tiếp tục".
-func set_next_scene(path: String) -> void:
+## Level gọi khi có scene kế tiếp: màn thắng sẽ hiện nút với chữ `text`.
+func set_next_scene(path: String, text := "Stage tiếp") -> void:
 	_next_scene = path
+	_next_text = text
+
+
+func _add_menu_button(box: Node) -> Button:
+	var b := Button.new()
+	b.text = "Về menu chính"
+	b.custom_minimum_size = Vector2(200, 48)
+	b.size_flags_horizontal = Control.SIZE_SHRINK_CENTER
+	b.pressed.connect(_on_menu)
+	box.add_child(b)
+	return b
+
+
+func _on_menu() -> void:
+	Engine.time_scale = 1.0
+	get_tree().change_scene_to_file(MENU_SCENE)
 
 
 func _on_next() -> void:

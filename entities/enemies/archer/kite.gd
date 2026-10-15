@@ -16,7 +16,7 @@ func physics_update(delta: float) -> void:
 	var px := Config.PX_PER_UNIT
 	var dx := e.dx_to_target()
 	var dist := absf(dx)
-	if dist > e.cfg("aggro_range", 11.0) * px * 1.5:
+	if not e.always_aggro and dist > e.cfg("aggro_range", 11.0) * px * 1.5:
 		machine.change_to(&"Idle")
 		return
 

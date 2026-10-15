@@ -2,7 +2,7 @@ extends Control
 ## Đăng nhập / đăng ký / chơi offline. Giao diện dựng bằng code cho gọn.
 ## Chơi offline vẫn vào game được nhưng không có phiên nên không lên bảng xếp hạng.
 
-const START_SCENE := "res://scenes/levels/m1s1.tscn"
+const START_SCENE := "res://scenes/ui/main_menu.tscn"
 
 var _email: LineEdit
 var _password: LineEdit

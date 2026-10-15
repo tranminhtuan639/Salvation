@@ -28,6 +28,8 @@ size = Vector2(240, 20)
 [node name="M1S3" type="Node2D"]
 script = ExtResource("1_level")
 stage_id = "m1s3"
+next_scene = "res://scenes/ui/main_menu.tscn"
+next_label = "Về menu chính"
 
 [node name="Background" type="CanvasLayer" parent="."]
 layer = -10

@@ -6,7 +6,7 @@
 [ext_resource type="PackedScene" path="res://entities/enemies/grunt/grunt.tscn" id="4_grunt"]
 [ext_resource type="PackedScene" path="res://scenes/ui/hud.tscn" id="5_hud"]
 [ext_resource type="PackedScene" path="res://entities/enemies/archer/archer.tscn" id="6_archer"]
-[ext_resource type="PackedScene" path="res://entities/enemies/brute/brute.tscn" id="7_brute"]
+[ext_resource type="PackedScene" uid="uid://dh1pn8jkmro8u" path="res://entities/enemies/brute/brute.tscn" id="7_brute"]
 [ext_resource type="PackedScene" path="res://scenes/levels/forest_background.tscn" id="8_650jl"]
 
 [sub_resource type="Gradient" id="Gradient_sky"]
@@ -23,9 +23,6 @@ size = Vector2(3400, 64)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_wall"]
 size = Vector2(64, 2000)
-
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_plat"]
-size = Vector2(240, 20)
 
 [node name="M2S1" type="Node2D" unique_id=524516068]
 script = ExtResource("1_level")
@@ -228,70 +225,6 @@ collision_mask = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="WallR" unique_id=1274407274]
 shape = SubResource("RectangleShape2D_wall")
 
-[node name="Platform0" type="StaticBody2D" parent="." unique_id=6086348]
-position = Vector2(700, 498)
-collision_mask = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform0" unique_id=1692865605]
-shape = SubResource("RectangleShape2D_plat")
-one_way_collision = true
-
-[node name="Visual" type="ColorRect" parent="Platform0" unique_id=459913494]
-offset_left = -120.0
-offset_top = -10.0
-offset_right = 120.0
-offset_bottom = 10.0
-mouse_filter = 2
-color = Color(0.4, 0.3, 0.4, 1)
-
-[node name="Platform1" type="StaticBody2D" parent="." unique_id=1756189345]
-position = Vector2(1500, 498)
-collision_mask = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform1" unique_id=2071545034]
-shape = SubResource("RectangleShape2D_plat")
-one_way_collision = true
-
-[node name="Visual" type="ColorRect" parent="Platform1" unique_id=1066562925]
-offset_left = -120.0
-offset_top = -10.0
-offset_right = 120.0
-offset_bottom = 10.0
-mouse_filter = 2
-color = Color(0.4, 0.3, 0.4, 1)
-
-[node name="Platform2" type="StaticBody2D" parent="." unique_id=2077167553]
-position = Vector2(2300, 498)
-collision_mask = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform2" unique_id=310807552]
-shape = SubResource("RectangleShape2D_plat")
-one_way_collision = true
-
-[node name="Visual" type="ColorRect" parent="Platform2" unique_id=1821027247]
-offset_left = -120.0
-offset_top = -10.0
-offset_right = 120.0
-offset_bottom = 10.0
-mouse_filter = 2
-color = Color(0.4, 0.3, 0.4, 1)
-
-[node name="Platform3" type="StaticBody2D" parent="." unique_id=885057004]
-position = Vector2(2900, 498)
-collision_mask = 0
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Platform3" unique_id=978043177]
-shape = SubResource("RectangleShape2D_plat")
-one_way_collision = true
-
-[node name="Visual" type="ColorRect" parent="Platform3" unique_id=704833579]
-offset_left = -120.0
-offset_top = -10.0
-offset_right = 120.0
-offset_bottom = 10.0
-mouse_filter = 2
-color = Color(0.4, 0.3, 0.4, 1)
-
 [node name="Enemies" type="Node2D" parent="." unique_id=1876123605]
 
 [node name="Waves" type="Node2D" parent="." unique_id=1642705791]
@@ -306,6 +239,9 @@ position = Vector2(1300, 618)
 
 [node name="Archer3" parent="Waves/Wave1" unique_id=653241939 instance=ExtResource("6_archer")]
 position = Vector2(1650, 618)
+
+[node name="Brute3" parent="Waves/Wave1" unique_id=889028174 instance=ExtResource("7_brute")]
+position = Vector2(2900, 618)
 
 [node name="Wave2" type="Node2D" parent="Waves" unique_id=1824123566]
 

@@ -23,6 +23,8 @@ var move_speed := 0.0
 var attack_speed_mult := 1.0
 var gravity := 0.0
 var target: Player
+## Quái spawn theo đợt: luôn biết chỗ player, bỏ qua tầm phát hiện và không bỏ cuộc giữa chừng.
+var always_aggro := false
 var _hp_prev := 0.0
 
 ## Telegraph bật cờ này để vẽ dấu "!" báo hiệu đòn sắp tới.
@@ -45,6 +47,13 @@ func _ready() -> void:
 		_hp_prev = c   # `changed` phát SAU `damaged`, nên trong _on_damaged _hp_prev vẫn là máu trước đòn
 		queue_redraw())
 	machine.setup(self)
+
+
+## Gọi sau khi quái đã vào cây (Level gọi cho quái spawn theo đợt): lao thẳng tới player.
+func aggro() -> void:
+	always_aggro = true
+	if machine.current != null and machine.current.name == &"Idle":
+		machine.change_to(&"Chase")
 
 
 ## Đọc chỉ số của riêng quái này: cfg("hp") -> Config["<prefix>.hp"]

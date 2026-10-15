@@ -1,85 +1,932 @@
-[gd_scene load_steps=19 format=3]
+[gd_scene format=3 uid="uid://dh1pn8jkmro8u"]
 
-[ext_resource type="Script" path="res://entities/enemies/enemy.gd" id="enemy"]
-[ext_resource type="Script" path="res://scripts/core/hitbox.gd" id="hitbox"]
-[ext_resource type="Script" path="res://scripts/core/hurtbox.gd" id="hurtbox"]
-[ext_resource type="Script" path="res://scripts/core/health_component.gd" id="health"]
-[ext_resource type="Script" path="res://scripts/core/state_machine.gd" id="sm"]
-[ext_resource type="Script" path="res://entities/enemies/states/idle.gd" id="idle"]
-[ext_resource type="Script" path="res://entities/enemies/states/chase.gd" id="chase"]
-[ext_resource type="Script" path="res://entities/enemies/states/telegraph.gd" id="telegraph"]
-[ext_resource type="Script" path="res://entities/enemies/brute/charge.gd" id="charge"]
-[ext_resource type="Script" path="res://entities/enemies/states/recover.gd" id="recover"]
-[ext_resource type="Script" path="res://entities/enemies/states/hurt.gd" id="hurt"]
-[ext_resource type="Script" path="res://entities/enemies/states/dead.gd" id="dead"]
+[ext_resource type="Texture2D" uid="uid://ds7lotiuphhda" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00001.png" id="2_8h0hv"]
+[ext_resource type="Texture2D" uid="uid://bdmqs8c5mg6co" path="res://assets/brute/Moss Guardian Animation/Idle/sq/Moss Guardian_00001.png" id="2_ibfjn"]
+[ext_resource type="Texture2D" uid="uid://c2p7bvglq6e7s" path="res://assets/brute/Moss Guardian Animation/Death/sq/Moss Guardian_Death_00001.png" id="2_srcxs"]
+[ext_resource type="Texture2D" uid="uid://cinikxqijrfs8" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00002.png" id="3_7e5xu"]
+[ext_resource type="Texture2D" uid="uid://dp3tatv48ccaj" path="res://assets/brute/Moss Guardian Animation/Death/sq/Moss Guardian_Death_00002.png" id="3_401mr"]
+[ext_resource type="Texture2D" uid="uid://uvaqc2326qqn" path="res://assets/brute/Moss Guardian Animation/Idle/sq/Moss Guardian_00002.png" id="3_i7uup"]
+[ext_resource type="Texture2D" uid="uid://dwiih0mcahjc5" path="res://assets/brute/Moss Guardian Animation/Death/sq/Moss Guardian_Death_00003.png" id="4_8sdwi"]
+[ext_resource type="Texture2D" uid="uid://dwictfujqr5ge" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00003.png" id="4_jx273"]
+[ext_resource type="Texture2D" uid="uid://llume8n6jquf" path="res://assets/brute/Moss Guardian Animation/Idle/sq/Moss Guardian_00003.png" id="4_on42v"]
+[ext_resource type="Texture2D" uid="uid://bkatj3nip7cws" path="res://assets/brute/Moss Guardian Animation/Death/sq/Moss Guardian_Death_00004.png" id="5_fjww2"]
+[ext_resource type="Texture2D" uid="uid://cv02cjjx0e226" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00004.png" id="5_muhi8"]
+[ext_resource type="Texture2D" uid="uid://dcad8bc6ixu05" path="res://assets/brute/Moss Guardian Animation/Idle/sq/Moss Guardian_00004.png" id="5_touqy"]
+[ext_resource type="Texture2D" uid="uid://bdpw4bv1yjqjw" path="res://assets/brute/Moss Guardian Animation/Death/sq/Moss Guardian_Death_00005.png" id="6_2gen2"]
+[ext_resource type="Texture2D" uid="uid://b1nt57q1p2hhg" path="res://assets/brute/Moss Guardian Animation/Idle/sq/Moss Guardian_00005.png" id="6_apknw"]
+[ext_resource type="Texture2D" uid="uid://ua8ykqhrchd8" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00005.png" id="6_jektl"]
+[ext_resource type="Texture2D" uid="uid://bwao7k4vx6vku" path="res://assets/brute/Moss Guardian Animation/Idle/sq/Moss Guardian_00006.png" id="7_2m8wl"]
+[ext_resource type="Texture2D" uid="uid://b3dsk2e8uvmrs" path="res://assets/brute/Moss Guardian Animation/Death/sq/Moss Guardian_Death_00006.png" id="7_bvfw8"]
+[ext_resource type="Texture2D" uid="uid://dc7wr1lgkgpnl" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00006.png" id="7_iqbmd"]
+[ext_resource type="Texture2D" uid="uid://cat043gm63302" path="res://assets/brute/Moss Guardian Animation/Death/sq/Moss Guardian_Death_00007.png" id="8_1gc4k"]
+[ext_resource type="Texture2D" uid="uid://bt3ddlfjeryda" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00007.png" id="8_2se6k"]
+[ext_resource type="Texture2D" uid="uid://jv6mwdh7wksx" path="res://assets/brute/Moss Guardian Animation/Idle/sq/Moss Guardian_00007.png" id="8_pey24"]
+[ext_resource type="Texture2D" uid="uid://eflh67qltk5g" path="res://assets/brute/Moss Guardian Animation/Death/sq/Moss Guardian_Death_00008.png" id="9_2nsim"]
+[ext_resource type="Texture2D" uid="uid://dauses33d4xpb" path="res://assets/brute/Moss Guardian Animation/Idle/sq/Moss Guardian_00008.png" id="9_dk273"]
+[ext_resource type="Texture2D" uid="uid://cbl3dpe4xcs67" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00008.png" id="9_x4crj"]
+[ext_resource type="Texture2D" uid="uid://bprsq2tuyoye7" path="res://assets/brute/Moss Guardian Animation/Idle/sq/Moss Guardian_00009.png" id="10_8ea46"]
+[ext_resource type="Texture2D" uid="uid://dwtxy675mvhce" path="res://assets/brute/Moss Guardian Animation/Death/sq/Moss Guardian_Death_00009.png" id="10_p84ut"]
+[ext_resource type="Texture2D" uid="uid://cedxo2mj5i85p" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00009.png" id="10_wial0"]
+[ext_resource type="Texture2D" uid="uid://bshonkhw8vjpf" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00010.png" id="11_7bna8"]
+[ext_resource type="Texture2D" uid="uid://cu27y17oyd7kx" path="res://assets/brute/Moss Guardian Animation/Death/sq/Moss Guardian_Death_00010.png" id="11_8vt6u"]
+[ext_resource type="Texture2D" uid="uid://rhm303av00h8" path="res://assets/brute/Moss Guardian Animation/Idle/sq/Moss Guardian_00010.png" id="11_p0ryp"]
+[ext_resource type="Texture2D" uid="uid://dbg0js2e4xbm7" path="res://assets/brute/Moss Guardian Animation/Idle/sq/Moss Guardian_00011.png" id="12_5hr5n"]
+[ext_resource type="Texture2D" uid="uid://dd3pjkitpu2f4" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00011.png" id="12_6s1l7"]
+[ext_resource type="Texture2D" uid="uid://b73khagnd1833" path="res://assets/brute/Moss Guardian Animation/Death/sq/Moss Guardian_Death_00011.png" id="12_ah1m0"]
+[ext_resource type="Texture2D" uid="uid://loqguto786pd" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00012.png" id="13_4tlcs"]
+[ext_resource type="Texture2D" uid="uid://lsrxdoylrt7c" path="res://assets/brute/Moss Guardian Animation/Idle/sq/Moss Guardian_00012.png" id="13_gxb7n"]
+[ext_resource type="Texture2D" uid="uid://b2rqimhtc4rya" path="res://assets/brute/Moss Guardian Animation/Death/sq/Moss Guardian_Death_00012.png" id="13_j3alb"]
+[ext_resource type="Texture2D" uid="uid://bjatue8qu03n8" path="res://assets/brute/Moss Guardian Animation/Idle/sq/Moss Guardian_00013.png" id="14_jaxup"]
+[ext_resource type="Texture2D" uid="uid://7fdw08a7nwbe" path="res://assets/brute/Moss Guardian Animation/Death/sq/Moss Guardian_Death_00013.png" id="14_kcqix"]
+[ext_resource type="Texture2D" uid="uid://jqx6g6bqstqu" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00013.png" id="14_or5qg"]
+[ext_resource type="Texture2D" uid="uid://dc75xbpxcj6p5" path="res://assets/brute/Moss Guardian Animation/Death/sq/Moss Guardian_Death_00014.png" id="15_al838"]
+[ext_resource type="Texture2D" uid="uid://c8k53r7sa4tsw" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00014.png" id="15_dkdvi"]
+[ext_resource type="Texture2D" uid="uid://bcllv3ekdoxjs" path="res://assets/brute/Moss Guardian Animation/Idle/sq/Moss Guardian_00014.png" id="15_l4agw"]
+[ext_resource type="Texture2D" uid="uid://dq7i7fu8thhrp" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00015.png" id="16_c7v1b"]
+[ext_resource type="Texture2D" uid="uid://cr55krhrlalka" path="res://assets/brute/Moss Guardian Animation/Death/sq/Moss Guardian_Death_00015.png" id="16_tfq7a"]
+[ext_resource type="Texture2D" uid="uid://te5ko4bwyu1y" path="res://assets/brute/Moss Guardian Animation/Idle/sq/Moss Guardian_00015.png" id="16_yw02r"]
+[ext_resource type="Texture2D" uid="uid://cib5dmbn41aj6" path="res://assets/brute/Moss Guardian Animation/Death/sq/Moss Guardian_Death_00016.png" id="17_22dyv"]
+[ext_resource type="Texture2D" uid="uid://r2djpg2lsby" path="res://assets/brute/Moss Guardian Animation/Idle/sq/Moss Guardian_00016.png" id="17_818q0"]
+[ext_resource type="Texture2D" uid="uid://cvi8ih3xksm76" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00016.png" id="17_nwa8k"]
+[ext_resource type="Texture2D" uid="uid://c754tpfi2r6ej" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00017.png" id="18_e5msg"]
+[ext_resource type="Texture2D" uid="uid://cyk5wsdm7y1vd" path="res://assets/brute/Moss Guardian Animation/Death/sq/Moss Guardian_Death_00017.png" id="18_qv43k"]
+[ext_resource type="Texture2D" uid="uid://cbe703v0ovhr8" path="res://assets/brute/Moss Guardian Animation/Idle/sq/Moss Guardian_00017.png" id="18_y121r"]
+[ext_resource type="Texture2D" uid="uid://c2acxgv7eus6x" path="res://assets/brute/Moss Guardian Animation/Death/sq/Moss Guardian_Death_00018.png" id="19_4q7hl"]
+[ext_resource type="Texture2D" uid="uid://d0y8gapl0qbdt" path="res://assets/brute/Moss Guardian Animation/Idle/sq/Moss Guardian_00018.png" id="19_8ceqq"]
+[ext_resource type="Texture2D" uid="uid://cq4sm02fdc70r" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00018.png" id="19_ngja6"]
+[ext_resource type="Texture2D" uid="uid://crgw3ghsl7d5o" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00019.png" id="20_1281e"]
+[ext_resource type="Texture2D" uid="uid://bo3ty8mxae0l0" path="res://assets/brute/Moss Guardian Animation/Idle/sq/Moss Guardian_00019.png" id="20_svnh4"]
+[ext_resource type="Texture2D" uid="uid://dxthplbrwa0c1" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00020.png" id="21_a4ip3"]
+[ext_resource type="Texture2D" uid="uid://dosnr3q1vvool" path="res://assets/brute/Moss Guardian Animation/Idle/sq/Moss Guardian_00020.png" id="21_mrw36"]
+[ext_resource type="Texture2D" uid="uid://chjqfrryu2b5a" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00021.png" id="22_7l5gx"]
+[ext_resource type="Texture2D" uid="uid://shho24kt4xkn" path="res://assets/brute/Moss Guardian Animation/Idle/sq/Moss Guardian_00021.png" id="22_ajcmm"]
+[ext_resource type="Texture2D" uid="uid://b2l5pdx88w218" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00022.png" id="23_b5o87"]
+[ext_resource type="Texture2D" uid="uid://bwd4qv1f35q42" path="res://assets/brute/Moss Guardian Animation/Idle/sq/Moss Guardian_00022.png" id="23_v46hj"]
+[ext_resource type="Texture2D" uid="uid://nv5owihcncux" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00023.png" id="24_15vhj"]
+[ext_resource type="Texture2D" uid="uid://b4ignwtq6ic07" path="res://assets/brute/Moss Guardian Animation/Idle/sq/Moss Guardian_00023.png" id="24_a0qb8"]
+[ext_resource type="Texture2D" uid="uid://xjlomlb3j0b1" path="res://assets/brute/Moss Guardian Animation/Idle/sq/Moss Guardian_00024.png" id="25_3ms4w"]
+[ext_resource type="Texture2D" uid="uid://c8vutbxruku4d" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00024.png" id="25_85d0k"]
+[ext_resource type="Texture2D" uid="uid://dq3wtg1bpykwd" path="res://assets/brute/Moss Guardian Animation/Idle/sq/Moss Guardian_00025.png" id="26_6wry2"]
+[ext_resource type="Texture2D" uid="uid://bdhsujyckpnml" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00025.png" id="26_fnd01"]
+[ext_resource type="Texture2D" uid="uid://ccu5pntevxwr4" path="res://assets/brute/Moss Guardian Animation/Idle/sq/Moss Guardian_00026.png" id="27_kt1t6"]
+[ext_resource type="Texture2D" uid="uid://du7lokc0pegrq" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00026.png" id="27_x8c8i"]
+[ext_resource type="Texture2D" uid="uid://dffbrtod768nj" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00027.png" id="28_5whtl"]
+[ext_resource type="Texture2D" uid="uid://bx8pxwmxa02vl" path="res://assets/brute/Moss Guardian Animation/Idle/sq/Moss Guardian_00027.png" id="28_crexa"]
+[ext_resource type="Texture2D" uid="uid://bf4kg07l3ahcg" path="res://assets/brute/Moss Guardian Animation/Idle/sq/Moss Guardian_00028.png" id="29_bgjw0"]
+[ext_resource type="Texture2D" uid="uid://bum2512yfdrhk" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00028.png" id="29_stvvh"]
+[ext_resource type="Texture2D" uid="uid://dtvybnxlpu6un" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00029.png" id="30_eejlv"]
+[ext_resource type="Texture2D" uid="uid://bed50ypgswru7" path="res://assets/brute/Moss Guardian Animation/Idle/sq/Moss Guardian_00029.png" id="30_muvsu"]
+[ext_resource type="Texture2D" uid="uid://davwr8y72gmxb" path="res://assets/brute/Moss Guardian Animation/Idle/sq/Moss Guardian_00030.png" id="31_2q8ts"]
+[ext_resource type="Texture2D" uid="uid://kmfwa2m4uw0g" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00030.png" id="31_n32jp"]
+[ext_resource type="Texture2D" uid="uid://bo6ukfr0q4oep" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00031.png" id="32_lhep4"]
+[ext_resource type="Texture2D" uid="uid://cnwtwgidn0jk6" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00001.png" id="32_re00o"]
+[ext_resource type="Texture2D" uid="uid://mav1hqkgoksh" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00002.png" id="33_2bev7"]
+[ext_resource type="Texture2D" uid="uid://gadl5w18uds3" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00032.png" id="33_54i8l"]
+[ext_resource type="Texture2D" uid="uid://b3xuayqjvpwpo" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00003.png" id="34_1i6wg"]
+[ext_resource type="Texture2D" uid="uid://djqmd20cu0t8m" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00033.png" id="34_eev5b"]
+[ext_resource type="Texture2D" uid="uid://b0xjp1a4fnleg" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00004.png" id="35_fokd7"]
+[ext_resource type="Texture2D" uid="uid://b84i74pncfq8i" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00034.png" id="35_idqxt"]
+[ext_resource type="Texture2D" uid="uid://d0jqkqjcoecs7" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00005.png" id="36_8w05t"]
+[ext_resource type="Texture2D" uid="uid://te5rf67lwrr7" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00035.png" id="36_l3nsd"]
+[ext_resource type="Texture2D" uid="uid://b2l6n3gk3hp3e" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00006.png" id="37_jaeeq"]
+[ext_resource type="Texture2D" uid="uid://d16dwcw41tfba" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00036.png" id="37_ox5qg"]
+[ext_resource type="Texture2D" uid="uid://dxkcvhwmb15by" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00007.png" id="38_bqi7s"]
+[ext_resource type="Texture2D" uid="uid://kk1vjlgyehwj" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00037.png" id="38_w5cha"]
+[ext_resource type="Texture2D" uid="uid://dj25o7i6e33du" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00008.png" id="39_hvjch"]
+[ext_resource type="Texture2D" uid="uid://b307ypb40o20s" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00038.png" id="39_uyh2m"]
+[ext_resource type="Texture2D" uid="uid://bniyq2rt66m5" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00009.png" id="40_ci4hs"]
+[ext_resource type="Texture2D" uid="uid://ktx4abkv6s70" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00039.png" id="40_tmqrk"]
+[ext_resource type="Texture2D" uid="uid://hbk2fqstk3fj" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00040.png" id="41_b7j1m"]
+[ext_resource type="Texture2D" uid="uid://clfvismf1pdfq" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00010.png" id="41_y4xrs"]
+[ext_resource type="Texture2D" uid="uid://3g4poiv2n3pt" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00011.png" id="42_57vus"]
+[ext_resource type="Texture2D" uid="uid://bv7noa8yupj3b" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00041.png" id="42_koq2q"]
+[ext_resource type="Texture2D" uid="uid://bjoba1fdn6emo" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00012.png" id="43_l6mju"]
+[ext_resource type="Texture2D" uid="uid://bl5kpvfgsaf8h" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00042.png" id="43_me0hc"]
+[ext_resource type="Texture2D" uid="uid://cdlmlpjb5ce0g" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00013.png" id="44_flued"]
+[ext_resource type="Texture2D" uid="uid://djf2d8xcvt0qd" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00043.png" id="44_u4v4h"]
+[ext_resource type="Texture2D" uid="uid://cjdtdf3plfdkt" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00014.png" id="45_4hgwg"]
+[ext_resource type="Texture2D" uid="uid://dyqu5ydn88y83" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00044.png" id="45_ff8mo"]
+[ext_resource type="Texture2D" uid="uid://b78opxb5o7ksa" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00045.png" id="46_dn1gf"]
+[ext_resource type="Texture2D" uid="uid://d3vbgnk70vvm" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00015.png" id="46_xhxo1"]
+[ext_resource type="Texture2D" uid="uid://c34e6cwp2k7tw" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00046.png" id="47_tscba"]
+[ext_resource type="Texture2D" uid="uid://rlg1d4i170ka" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00016.png" id="47_xi8mk"]
+[ext_resource type="Texture2D" uid="uid://cdjmwcthyn1us" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00017.png" id="48_gp7w3"]
+[ext_resource type="Texture2D" uid="uid://cr7q7ailey78r" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00047.png" id="48_y4mkp"]
+[ext_resource type="Texture2D" uid="uid://j0fd5mriddc2" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00048.png" id="49_1ayh1"]
+[ext_resource type="Texture2D" uid="uid://crod0meola3sn" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00018.png" id="49_c8wqv"]
+[ext_resource type="Texture2D" uid="uid://dp5gvgdks4wdu" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00049.png" id="50_0j88h"]
+[ext_resource type="Texture2D" uid="uid://bg4qkl157huxo" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00019.png" id="50_srcxs"]
+[ext_resource type="Texture2D" uid="uid://clubvcj0gntm7" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00020.png" id="51_401mr"]
+[ext_resource type="Texture2D" uid="uid://bylcvy6bs8lv0" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00050.png" id="51_dhhor"]
+[ext_resource type="Texture2D" uid="uid://3mt4o4yo6jqy" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00021.png" id="52_8sdwi"]
+[ext_resource type="Texture2D" uid="uid://b0sa04d1i1n8y" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00051.png" id="52_njmxe"]
+[ext_resource type="Texture2D" uid="uid://ds3y0r62xorl1" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00022.png" id="53_fjww2"]
+[ext_resource type="Texture2D" uid="uid://cdnjj5nw2o04u" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00052.png" id="53_mjtq0"]
+[ext_resource type="Texture2D" uid="uid://cldegy3srflav" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00023.png" id="54_2gen2"]
+[ext_resource type="Texture2D" uid="uid://ccl2n351fv1tn" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00053.png" id="54_vj38h"]
+[ext_resource type="Texture2D" uid="uid://nhmm27q48isw" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00024.png" id="55_bvfw8"]
+[ext_resource type="Texture2D" uid="uid://cx7eefjflnklv" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00054.png" id="55_xfw5h"]
+[ext_resource type="Texture2D" uid="uid://bmk7so5vsa04n" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00025.png" id="56_1gc4k"]
+[ext_resource type="Texture2D" uid="uid://6xilr4wxf8rc" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00055.png" id="56_8ll86"]
+[ext_resource type="Texture2D" uid="uid://lh58oc2mifyg" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00026.png" id="57_2nsim"]
+[ext_resource type="Texture2D" uid="uid://dcw4s8mr0xpxf" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00056.png" id="57_5cddw"]
+[ext_resource type="Texture2D" uid="uid://cjnw2kdetto7f" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00027.png" id="58_p84ut"]
+[ext_resource type="Texture2D" uid="uid://dwnnku46id5m2" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00057.png" id="58_rrhk7"]
+[ext_resource type="Texture2D" uid="uid://o8wdosmwk4xe" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00058.png" id="59_1ajyt"]
+[ext_resource type="Texture2D" uid="uid://bvaeqowpv1qu5" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00028.png" id="59_8vt6u"]
+[ext_resource type="Texture2D" uid="uid://djbdocnlh70e" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00029.png" id="60_ah1m0"]
+[ext_resource type="Texture2D" uid="uid://pm8po45u6wem" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00059.png" id="60_rqml6"]
+[ext_resource type="Texture2D" uid="uid://bx5jhmxvf7bxq" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00030.png" id="61_j3alb"]
+[ext_resource type="Texture2D" uid="uid://cgvlfqrinfonn" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00060.png" id="61_lfp5w"]
+[ext_resource type="Texture2D" uid="uid://duyduikqy8lrx" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00061.png" id="62_3dx07"]
+[ext_resource type="Texture2D" uid="uid://b4erct58xbicq" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00031.png" id="62_kcqix"]
+[ext_resource type="Texture2D" uid="uid://dlw683wiprn8x" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00062.png" id="63_0xtra"]
+[ext_resource type="Texture2D" uid="uid://caa2lim5oaltt" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00032.png" id="63_al838"]
+[ext_resource type="Texture2D" uid="uid://cy4c5w1rhhwa6" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00063.png" id="64_d4ttc"]
+[ext_resource type="Texture2D" uid="uid://cce1jvens447g" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00033.png" id="64_tfq7a"]
+[ext_resource type="Texture2D" uid="uid://dk2wgibb5fd6w" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00034.png" id="65_22dyv"]
+[ext_resource type="Texture2D" uid="uid://c03es7v3si5lm" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00064.png" id="65_i5m7m"]
+[ext_resource type="Texture2D" uid="uid://4srm6cuvtu3r" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00065.png" id="66_ak3x4"]
+[ext_resource type="Texture2D" uid="uid://cvj1uemhatuex" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00035.png" id="66_qv43k"]
+[ext_resource type="Texture2D" uid="uid://db3j5sff3rr8n" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00036.png" id="67_4q7hl"]
+[ext_resource type="Texture2D" uid="uid://d16najsn1v30d" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00066.png" id="67_h5eoo"]
+[ext_resource type="Texture2D" uid="uid://dlnd521klib7p" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00067.png" id="68_0smuw"]
+[ext_resource type="Texture2D" uid="uid://jxhgxiim1p1u" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00037.png" id="68_o70gk"]
+[ext_resource type="Texture2D" uid="uid://bdy4r5wr610lf" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00038.png" id="69_l1an8"]
+[ext_resource type="Texture2D" uid="uid://cpbdjmyeu8wth" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00068.png" id="69_u7qn8"]
+[ext_resource type="Texture2D" uid="uid://dbpxxciqsshlg" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00039.png" id="70_d6521"]
+[ext_resource type="Texture2D" uid="uid://bautsvudg5v2s" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00069.png" id="70_njpn6"]
+[ext_resource type="Texture2D" uid="uid://cybah6558bvsk" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00040.png" id="71_j23n5"]
+[ext_resource type="Texture2D" uid="uid://dveoksjpauh6q" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00070.png" id="71_nqgvk"]
+[ext_resource type="Texture2D" uid="uid://epq1sq5rc3as" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00041.png" id="72_jgj1t"]
+[ext_resource type="Texture2D" uid="uid://db2m0pmf5nwyx" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00071.png" id="72_lsxe0"]
+[ext_resource type="Texture2D" uid="uid://b1sv8vonolwwa" path="res://assets/brute/Moss Guardian Animation/Attack2/sq/Moss Guardian_Attack2_00072.png" id="73_0cd7r"]
+[ext_resource type="Texture2D" uid="uid://dtllkgt50xvcv" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00042.png" id="73_qjjbm"]
+[ext_resource type="Texture2D" uid="uid://c0ha5j0rm468d" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00043.png" id="74_y3adf"]
+[ext_resource type="Texture2D" uid="uid://cpnd6t48cns5k" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00044.png" id="75_kl4i8"]
+[ext_resource type="Texture2D" uid="uid://nb6bhqdxtlvb" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00045.png" id="76_ro2yv"]
+[ext_resource type="Texture2D" uid="uid://duf6lldwj2ibh" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00046.png" id="77_icsyl"]
+[ext_resource type="Texture2D" uid="uid://2xdlmj6bgui4" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00047.png" id="78_lomnm"]
+[ext_resource type="Texture2D" uid="uid://cf34lpwso8nxt" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00048.png" id="79_w6pn2"]
+[ext_resource type="Texture2D" uid="uid://c7xmq5sa7a180" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00049.png" id="80_qwm3s"]
+[ext_resource type="Texture2D" uid="uid://oiy14jj531qw" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00050.png" id="81_4e06f"]
+[ext_resource type="Texture2D" uid="uid://bwfl421hn81o1" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00051.png" id="82_d31dk"]
+[ext_resource type="Texture2D" uid="uid://bukw13sjwm3wf" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00052.png" id="83_i6b32"]
+[ext_resource type="Texture2D" uid="uid://bym0uxan24fjl" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00053.png" id="84_1oi6p"]
+[ext_resource type="Texture2D" uid="uid://u4ib5p2vo0ox" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00054.png" id="85_3n086"]
+[ext_resource type="Texture2D" uid="uid://degfm5pmbtw8c" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00055.png" id="86_gffxb"]
+[ext_resource type="Texture2D" uid="uid://bytalr4t0ikxp" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00056.png" id="87_ap0pe"]
+[ext_resource type="Texture2D" uid="uid://chigrd0vercu4" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00057.png" id="88_8gy1u"]
+[ext_resource type="Texture2D" uid="uid://8cqxe177lup8" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00058.png" id="89_85miy"]
+[ext_resource type="Texture2D" uid="uid://6vp6y83t8tek" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00059.png" id="90_1vvhc"]
+[ext_resource type="Texture2D" uid="uid://bpuiuhv10ij3a" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00060.png" id="91_n5h48"]
+[ext_resource type="Texture2D" uid="uid://b5rui0u8fowpx" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00061.png" id="92_eefvx"]
+[ext_resource type="Texture2D" uid="uid://dl75gvc2jtugb" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00062.png" id="93_iy0sm"]
+[ext_resource type="Texture2D" uid="uid://fgaodacqucak" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00063.png" id="94_mdlva"]
+[ext_resource type="Texture2D" uid="uid://c2hwfoyl86xyu" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00064.png" id="95_dw2d3"]
+[ext_resource type="Texture2D" uid="uid://ceh3h1fwmamna" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00065.png" id="96_0642o"]
+[ext_resource type="Texture2D" uid="uid://dx7lugtx2thuh" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00066.png" id="97_c5kkh"]
+[ext_resource type="Texture2D" uid="uid://eds0t3eabf5k" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00067.png" id="98_6min0"]
+[ext_resource type="Texture2D" uid="uid://cgu40nnj2qxge" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00068.png" id="99_shc2x"]
+[ext_resource type="Texture2D" uid="uid://dcogh5sbncxx6" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00069.png" id="100_hpqy7"]
+[ext_resource type="Texture2D" uid="uid://cp128clf71gfg" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00070.png" id="101_abin3"]
+[ext_resource type="Texture2D" uid="uid://i6dlxhr7xuxl" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00071.png" id="102_u52fv"]
+[ext_resource type="Texture2D" uid="uid://cgihpbs8byw1q" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00072.png" id="103_rlsef"]
+[ext_resource type="Texture2D" uid="uid://bd3duvmu46jjm" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00073.png" id="104_iqc18"]
+[ext_resource type="Texture2D" uid="uid://lga6pjhktss3" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00074.png" id="105_25ub8"]
+[ext_resource type="Texture2D" uid="uid://bk6jkghhmdyew" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00075.png" id="106_bnfa2"]
+[ext_resource type="Texture2D" uid="uid://c061kcgarmy4e" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00076.png" id="107_21iex"]
+[ext_resource type="Texture2D" uid="uid://dwf52hgs3ma4r" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00077.png" id="108_1bocv"]
+[ext_resource type="Texture2D" uid="uid://d1mm1s43t6j1j" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00078.png" id="109_dla4c"]
+[ext_resource type="Texture2D" uid="uid://c5gg4kvk7gjt7" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00079.png" id="110_xlxr2"]
+[ext_resource type="Texture2D" uid="uid://bqwxwe3na056d" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00080.png" id="111_4tfcx"]
+[ext_resource type="Texture2D" uid="uid://b04alqsoe0vks" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00081.png" id="112_yrro5"]
+[ext_resource type="Texture2D" uid="uid://dwlluhpmejft0" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00082.png" id="113_lj2gf"]
+[ext_resource type="Texture2D" uid="uid://clbavj6y5llhq" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00083.png" id="114_d4nve"]
+[ext_resource type="Texture2D" uid="uid://c5na183ltk30w" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00084.png" id="115_de4gp"]
+[ext_resource type="Texture2D" uid="uid://7l1kusa5w23k" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00085.png" id="116_i1fce"]
+[ext_resource type="Texture2D" uid="uid://baos1ffka344v" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00086.png" id="117_njb2i"]
+[ext_resource type="Texture2D" uid="uid://dy36ekpnul10s" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00087.png" id="118_2x2xl"]
+[ext_resource type="Texture2D" uid="uid://bmcyyrbxjt078" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00088.png" id="119_vh7n7"]
+[ext_resource type="Texture2D" uid="uid://djhfoa50ycuye" path="res://assets/brute/Moss Guardian Animation/Walk/sq/Moss Guardian_Walk_00089.png" id="120_lypfs"]
+[ext_resource type="Script" uid="uid://d3jj6xl3v5qe6" path="res://entities/enemies/brute/charge.gd" id="charge"]
+[ext_resource type="Script" uid="uid://cc5equvorrepa" path="res://entities/enemies/states/chase.gd" id="chase"]
+[ext_resource type="Script" uid="uid://dst8qnmp5nvo4" path="res://entities/enemies/states/dead.gd" id="dead"]
+[ext_resource type="Script" uid="uid://dpet54l22d4qf" path="res://entities/enemies/enemy.gd" id="enemy"]
+[ext_resource type="Script" uid="uid://jg0nvl12bjeh" path="res://scripts/core/health_component.gd" id="health"]
+[ext_resource type="Script" uid="uid://dffj5onrph8w" path="res://scripts/core/hitbox.gd" id="hitbox"]
+[ext_resource type="Script" uid="uid://dhsn6hv0su71r" path="res://entities/enemies/states/hurt.gd" id="hurt"]
+[ext_resource type="Script" uid="uid://dc40uyhgyjsem" path="res://scripts/core/hurtbox.gd" id="hurtbox"]
+[ext_resource type="Script" uid="uid://c6ymksot06ysp" path="res://entities/enemies/states/idle.gd" id="idle"]
+[ext_resource type="Script" uid="uid://dt2sao5sj6wwl" path="res://entities/enemies/states/recover.gd" id="recover"]
+[ext_resource type="Script" uid="uid://1w2onmrw061i" path="res://scripts/core/state_machine.gd" id="sm"]
+[ext_resource type="Script" uid="uid://b8gfe0pn2mbkp" path="res://entities/enemies/states/telegraph.gd" id="telegraph"]
 
-[sub_resource type="Gradient" id="Gradient_ph"]
-colors = PackedColorArray(0.75, 0.4, 0.25, 1, 0.75, 0.4, 0.25, 1)
-
-[sub_resource type="GradientTexture2D" id="GradientTexture2D_ph"]
-gradient = SubResource("Gradient_ph")
-width = 64
-height = 110
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_body"]
+radius = 28.0
+height = 110.0
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_ph"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("GradientTexture2D_ph")
-}],
-"loop": true,
-"name": &"idle",
-"speed": 5.0
-},
-{
-"frames": [{
+"texture": ExtResource("2_8h0hv")
+}, {
 "duration": 1.0,
-"texture": SubResource("GradientTexture2D_ph")
-}],
-"loop": true,
-"name": &"run",
-"speed": 5.0
-},
-{
-"frames": [{
+"texture": ExtResource("3_7e5xu")
+}, {
 "duration": 1.0,
-"texture": SubResource("GradientTexture2D_ph")
-}],
-"loop": false,
-"name": &"telegraph",
-"speed": 5.0
-},
-{
-"frames": [{
+"texture": ExtResource("4_jx273")
+}, {
 "duration": 1.0,
-"texture": SubResource("GradientTexture2D_ph")
+"texture": ExtResource("5_muhi8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_jektl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_iqbmd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_2se6k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_x4crj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_wial0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_7bna8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_6s1l7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_4tlcs")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_or5qg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_dkdvi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_c7v1b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_nwa8k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_e5msg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_ngja6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_1281e")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_a4ip3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_7l5gx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_b5o87")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_15vhj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_85d0k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_fnd01")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_x8c8i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_5whtl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_stvvh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_eejlv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_n32jp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("32_lhep4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("33_54i8l")
+}, {
+"duration": 1.0,
+"texture": ExtResource("34_eev5b")
+}, {
+"duration": 1.0,
+"texture": ExtResource("35_idqxt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("36_l3nsd")
+}, {
+"duration": 1.0,
+"texture": ExtResource("37_ox5qg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("38_w5cha")
+}, {
+"duration": 1.0,
+"texture": ExtResource("39_uyh2m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("40_tmqrk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("41_b7j1m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("42_koq2q")
+}, {
+"duration": 1.0,
+"texture": ExtResource("43_me0hc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("44_u4v4h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("45_ff8mo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("46_dn1gf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("47_tscba")
+}, {
+"duration": 1.0,
+"texture": ExtResource("48_y4mkp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("49_1ayh1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("50_0j88h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("51_dhhor")
+}, {
+"duration": 1.0,
+"texture": ExtResource("52_njmxe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("53_mjtq0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("54_vj38h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("55_xfw5h")
+}, {
+"duration": 1.0,
+"texture": ExtResource("56_8ll86")
+}, {
+"duration": 1.0,
+"texture": ExtResource("57_5cddw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("58_rrhk7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("59_1ajyt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("60_rqml6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("61_lfp5w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("62_3dx07")
+}, {
+"duration": 1.0,
+"texture": ExtResource("63_0xtra")
+}, {
+"duration": 1.0,
+"texture": ExtResource("64_d4ttc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("65_i5m7m")
+}, {
+"duration": 1.0,
+"texture": ExtResource("66_ak3x4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("67_h5eoo")
+}, {
+"duration": 1.0,
+"texture": ExtResource("68_0smuw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("69_u7qn8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("70_njpn6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("71_nqgvk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("72_lsxe0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("73_0cd7r")
 }],
-"loop": false,
+"loop": 0,
 "name": &"attack",
 "speed": 5.0
-},
-{
+}, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("GradientTexture2D_ph")
-}],
-"loop": false,
-"name": &"hurt",
-"speed": 5.0
-},
-{
-"frames": [{
+"texture": ExtResource("2_srcxs")
+}, {
 "duration": 1.0,
-"texture": SubResource("GradientTexture2D_ph")
+"texture": ExtResource("3_401mr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_8sdwi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_fjww2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_2gen2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_bvfw8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_1gc4k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_2nsim")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_p84ut")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_8vt6u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_ah1m0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_j3alb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_kcqix")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_al838")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_tfq7a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_22dyv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_qv43k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_4q7hl")
 }],
-"loop": false,
+"loop": 0,
 "name": &"dead",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_401mr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_8sdwi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_fjww2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_2gen2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_bvfw8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_1gc4k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_2nsim")
+}],
+"loop": 0,
+"name": &"hurt",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("2_ibfjn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_i7uup")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_on42v")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_touqy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_apknw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_2m8wl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_pey24")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_dk273")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_8ea46")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_p0ryp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_5hr5n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_gxb7n")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_jaxup")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_l4agw")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_yw02r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("17_818q0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("18_y121r")
+}, {
+"duration": 1.0,
+"texture": ExtResource("19_8ceqq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("20_svnh4")
+}, {
+"duration": 1.0,
+"texture": ExtResource("21_mrw36")
+}, {
+"duration": 1.0,
+"texture": ExtResource("22_ajcmm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("23_v46hj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("24_a0qb8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("25_3ms4w")
+}, {
+"duration": 1.0,
+"texture": ExtResource("26_6wry2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("27_kt1t6")
+}, {
+"duration": 1.0,
+"texture": ExtResource("28_crexa")
+}, {
+"duration": 1.0,
+"texture": ExtResource("29_bgjw0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("30_muvsu")
+}, {
+"duration": 1.0,
+"texture": ExtResource("31_2q8ts")
+}],
+"loop": 1,
+"name": &"idle",
+"speed": 4.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("32_re00o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("33_2bev7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("34_1i6wg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("35_fokd7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("36_8w05t")
+}, {
+"duration": 1.0,
+"texture": ExtResource("37_jaeeq")
+}, {
+"duration": 1.0,
+"texture": ExtResource("38_bqi7s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("39_hvjch")
+}, {
+"duration": 1.0,
+"texture": ExtResource("40_ci4hs")
+}, {
+"duration": 1.0,
+"texture": ExtResource("41_y4xrs")
+}, {
+"duration": 1.0,
+"texture": ExtResource("42_57vus")
+}, {
+"duration": 1.0,
+"texture": ExtResource("43_l6mju")
+}, {
+"duration": 1.0,
+"texture": ExtResource("44_flued")
+}, {
+"duration": 1.0,
+"texture": ExtResource("45_4hgwg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("46_xhxo1")
+}, {
+"duration": 1.0,
+"texture": ExtResource("47_xi8mk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("48_gp7w3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("49_c8wqv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("50_srcxs")
+}, {
+"duration": 1.0,
+"texture": ExtResource("51_401mr")
+}, {
+"duration": 1.0,
+"texture": ExtResource("52_8sdwi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("53_fjww2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("54_2gen2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("55_bvfw8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("56_1gc4k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("57_2nsim")
+}, {
+"duration": 1.0,
+"texture": ExtResource("58_p84ut")
+}, {
+"duration": 1.0,
+"texture": ExtResource("59_8vt6u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("60_ah1m0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("61_j3alb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("62_kcqix")
+}, {
+"duration": 1.0,
+"texture": ExtResource("63_al838")
+}, {
+"duration": 1.0,
+"texture": ExtResource("64_tfq7a")
+}, {
+"duration": 1.0,
+"texture": ExtResource("65_22dyv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("66_qv43k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("67_4q7hl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("68_o70gk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("69_l1an8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("70_d6521")
+}, {
+"duration": 1.0,
+"texture": ExtResource("71_j23n5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("72_jgj1t")
+}, {
+"duration": 1.0,
+"texture": ExtResource("73_qjjbm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("74_y3adf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("75_kl4i8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("76_ro2yv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("77_icsyl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("78_lomnm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("79_w6pn2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("80_qwm3s")
+}, {
+"duration": 1.0,
+"texture": ExtResource("81_4e06f")
+}, {
+"duration": 1.0,
+"texture": ExtResource("82_d31dk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("83_i6b32")
+}, {
+"duration": 1.0,
+"texture": ExtResource("84_1oi6p")
+}, {
+"duration": 1.0,
+"texture": ExtResource("85_3n086")
+}, {
+"duration": 1.0,
+"texture": ExtResource("86_gffxb")
+}, {
+"duration": 1.0,
+"texture": ExtResource("87_ap0pe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("88_8gy1u")
+}, {
+"duration": 1.0,
+"texture": ExtResource("89_85miy")
+}, {
+"duration": 1.0,
+"texture": ExtResource("90_1vvhc")
+}, {
+"duration": 1.0,
+"texture": ExtResource("91_n5h48")
+}, {
+"duration": 1.0,
+"texture": ExtResource("92_eefvx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("93_iy0sm")
+}, {
+"duration": 1.0,
+"texture": ExtResource("94_mdlva")
+}, {
+"duration": 1.0,
+"texture": ExtResource("95_dw2d3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("96_0642o")
+}, {
+"duration": 1.0,
+"texture": ExtResource("97_c5kkh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("98_6min0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("99_shc2x")
+}, {
+"duration": 1.0,
+"texture": ExtResource("100_hpqy7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("101_abin3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("102_u52fv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("103_rlsef")
+}, {
+"duration": 1.0,
+"texture": ExtResource("104_iqc18")
+}, {
+"duration": 1.0,
+"texture": ExtResource("105_25ub8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("106_bnfa2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("107_21iex")
+}, {
+"duration": 1.0,
+"texture": ExtResource("108_1bocv")
+}, {
+"duration": 1.0,
+"texture": ExtResource("109_dla4c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("110_xlxr2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("111_4tfcx")
+}, {
+"duration": 1.0,
+"texture": ExtResource("112_yrro5")
+}, {
+"duration": 1.0,
+"texture": ExtResource("113_lj2gf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("114_d4nve")
+}, {
+"duration": 1.0,
+"texture": ExtResource("115_de4gp")
+}, {
+"duration": 1.0,
+"texture": ExtResource("116_i1fce")
+}, {
+"duration": 1.0,
+"texture": ExtResource("117_njb2i")
+}, {
+"duration": 1.0,
+"texture": ExtResource("118_2x2xl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("119_vh7n7")
+}, {
+"duration": 1.0,
+"texture": ExtResource("120_lypfs")
+}],
+"loop": 1,
+"name": &"run",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("4_8sdwi")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_fjww2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_2gen2")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_bvfw8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_1gc4k")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_2nsim")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_p84ut")
+}],
+"loop": 0,
+"name": &"telegraph",
+"speed": 5.0
 }]
-
-[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_body"]
-radius = 28.0
-height = 110.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hit"]
 size = Vector2(90, 64)
@@ -87,65 +934,72 @@ size = Vector2(90, 64)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hurt"]
 size = Vector2(60, 110)
 
-[node name="Brute" type="CharacterBody2D"]
+[node name="Brute" type="CharacterBody2D" unique_id=889028174]
 collision_layer = 4
-collision_mask = 1
 script = ExtResource("enemy")
 config_prefix = "enemy.brute"
 body_height = 110.0
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(0, -55)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=900620248]
+position = Vector2(0, -78)
+scale = Vector2(1.4, 1.4)
 shape = SubResource("CapsuleShape2D_body")
 
-[node name="Pivot" type="Node2D" parent="."]
+[node name="Pivot" type="Node2D" parent="." unique_id=1273708339]
 
-[node name="Sprite" type="AnimatedSprite2D" parent="Pivot"]
-position = Vector2(0, -55)
+[node name="Sprite" type="AnimatedSprite2D" parent="Pivot" unique_id=136400196]
+position = Vector2(-20, -120)
+scale = Vector2(0.3, 0.3)
 sprite_frames = SubResource("SpriteFrames_ph")
-animation = &"idle"
+animation = &"attack"
+autoplay = "idle"
+frame = 71
+frame_progress = 1.0
+speed_scale = 15.0
 
-[node name="Hitbox" type="Area2D" parent="Pivot"]
+[node name="Hitbox" type="Area2D" parent="Pivot" unique_id=773540934]
 collision_layer = 64
 collision_mask = 8
 script = ExtResource("hitbox")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/Hitbox"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Pivot/Hitbox" unique_id=1241456125]
+position = Vector2(0, -34)
 shape = SubResource("RectangleShape2D_hit")
 
-[node name="Hurtbox" type="Area2D" parent="."]
+[node name="Hurtbox" type="Area2D" parent="." unique_id=533351242]
 collision_layer = 16
 collision_mask = 0
 script = ExtResource("hurtbox")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox"]
-position = Vector2(0, -55)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=1283413116]
+position = Vector2(0, -67)
+scale = Vector2(1.2, 1.2)
 shape = SubResource("RectangleShape2D_hurt")
 
-[node name="Health" type="Node" parent="."]
+[node name="Health" type="Node" parent="." unique_id=481080486]
 script = ExtResource("health")
 
-[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+[node name="StateMachine" type="Node" parent="." unique_id=128490351 node_paths=PackedStringArray("initial_state")]
 script = ExtResource("sm")
 initial_state = NodePath("Idle")
 
-[node name="Idle" type="Node" parent="StateMachine"]
+[node name="Idle" type="Node" parent="StateMachine" unique_id=1451755990]
 script = ExtResource("idle")
 
-[node name="Chase" type="Node" parent="StateMachine"]
+[node name="Chase" type="Node" parent="StateMachine" unique_id=2062894655]
 script = ExtResource("chase")
 
-[node name="Telegraph" type="Node" parent="StateMachine"]
+[node name="Telegraph" type="Node" parent="StateMachine" unique_id=1660621531]
 script = ExtResource("telegraph")
 
-[node name="Attack" type="Node" parent="StateMachine"]
+[node name="Attack" type="Node" parent="StateMachine" unique_id=1161875960]
 script = ExtResource("charge")
 
-[node name="Recover" type="Node" parent="StateMachine"]
+[node name="Recover" type="Node" parent="StateMachine" unique_id=1142085556]
 script = ExtResource("recover")
 
-[node name="Hurt" type="Node" parent="StateMachine"]
+[node name="Hurt" type="Node" parent="StateMachine" unique_id=1828915101]
 script = ExtResource("hurt")
 
-[node name="Dead" type="Node" parent="StateMachine"]
+[node name="Dead" type="Node" parent="StateMachine" unique_id=550255224]
 script = ExtResource("dead")

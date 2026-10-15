@@ -8,6 +8,10 @@ signal cleared(stats: Dictionary)
 @export var stage_id := "m1s1"   # trùng stages.id trong Supabase
 ## Scene tiếp theo: có thì màn thắng hiện nút "Tiếp tục" (rỗng = chỉ có "Chơi lại").
 @export_file("*.tscn") var next_scene := ""
+## Nhãn nút ở màn thắng khi có scene kế tiếp.
+@export var next_label := "Stage tiếp"
+## Quái spawn theo đợt tự lao tới player ngay khi xuất hiện (tắt thì chúng đứng yên tới khi player vào tầm phát hiện).
+@export var wave_aggro := true
 ## Ám màu lên quái spawn theo đợt (creep "chiều không gian khác" theo GDD). WHITE = giữ nguyên.
 @export var creep_tint := Color.WHITE
 ## Nghỉ giữa các đợt (giây).
@@ -60,7 +64,7 @@ func _ready() -> void:
 		stats.attach_player(_player)
 		_player.died.connect(_on_player_died)
 	if _hud != null and next_scene != "":
-		_hud.set_next_scene(next_scene)
+		_hud.set_next_scene(next_scene, next_label)
 	if _wave_alive == 0:
 		_spawn_next_wave()   # không có quái đặt sẵn: vào là có đợt 1
 	_update_objective()
@@ -95,8 +99,11 @@ func _spawn_next_wave() -> void:
 			_wave_alive += 1
 	$Enemies.add_child(w)   # _ready của quái chạy ngay tại đây
 	for e in w.get_children():
-		if e is Enemy and creep_tint != Color.WHITE:
-			e.sprite.self_modulate = creep_tint
+		if e is Enemy:
+			if creep_tint != Color.WHITE:
+				e.sprite.self_modulate = creep_tint
+			if wave_aggro:
+				e.aggro()
 	_update_objective()
 
 
