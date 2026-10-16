@@ -10,6 +10,9 @@ signal cleared(stats: Dictionary)
 @export_file("*.tscn") var next_scene := ""
 ## Nhãn nút ở màn thắng khi có scene kế tiếp.
 @export var next_label := "Stage tiếp"
+## Cổng cuối bản đồ: hạ hết quái thì cổng mở, chạy vào cổng để sang `next_scene` (có hiệu ứng mờ dần).
+## Bật thì KHÔNG hiện bảng thắng + nút; tắt thì dùng bảng thắng như cũ. Cần `next_scene` khác rỗng.
+@export var use_exit_gate := false
 ## Quái spawn theo đợt tự lao tới player ngay khi xuất hiện (tắt thì chúng đứng yên tới khi player vào tầm phát hiện).
 @export var wave_aggro := true
 ## Ám màu lên quái spawn theo đợt (creep "chiều không gian khác" theo GDD). WHITE = giữ nguyên.
@@ -25,12 +28,15 @@ var stats := RunStats.new()
 var _player: Player
 var _hud: Node
 var _submitted := false
+var _gate: ExitGate
+var _leaving := false
 var _waves: Array[Node] = []   # node con của "Waves": mỗi con là 1 đợt, được rút khỏi cây tới lúc spawn
 var _wave_index := 0
 var _wave_alive := 0		   # quái còn sống của đợt hiện tại (hoặc quái đặt sẵn trong Enemies)
 
 
 func _ready() -> void:
+	_fade_in()   # vào stage từ đen -> sáng
 	stats.start_msec = Time.get_ticks_msec()
 	Runs.start(stage_id)   # không await: chơi ngay, lúc nộp kết quả sẽ tự đợi nếu phiên chưa mở xong
 
@@ -65,9 +71,69 @@ func _ready() -> void:
 		_player.died.connect(_on_player_died)
 	if _hud != null and next_scene != "":
 		_hud.set_next_scene(next_scene, next_label)
+	if use_exit_gate and next_scene != "":
+		_setup_gate()
 	if _wave_alive == 0:
 		_spawn_next_wave()   # không có quái đặt sẵn: vào là có đợt 1
 	_update_objective()
+
+
+## Cổng đặt ở cuối bản đồ (theo giới hạn phải của camera), sát tường, đứng trên mặt sàn.
+func _setup_gate() -> void:
+	var cam := get_node_or_null("Camera") as Camera2D
+	var right := float(cam.limit_right) if cam != null else 3200.0
+	_gate = ExitGate.new()
+	_gate.position = Vector2(right - 130.0, 618.0)
+	add_child(_gate)
+	_gate.entered.connect(_on_gate_entered)
+
+
+func _process(_delta: float) -> void:
+	# Mũi tên đỏ chỉ đường: hiện khi cổng đã mở mà còn nằm ngoài màn hình phía bên phải
+	if _gate == null or not _gate.is_open or _hud == null or _leaving:
+		return
+	var cam := get_viewport().get_camera_2d()
+	if cam == null:
+		return
+	var half_w := get_viewport_rect().size.x * 0.5 / cam.zoom.x
+	var gate_in_view := _gate.global_position.x - 100.0 < cam.get_screen_center_position().x + half_w
+	_hud.set_go_arrow(not gate_in_view)
+
+
+func _on_gate_entered() -> void:
+	if _leaving:
+		return
+	_leaving = true
+	if _hud != null:
+		_hud.set_go_arrow(false)
+	var rect := _make_fade_rect()
+	rect.color.a = 0.0
+	var tw := create_tween()
+	tw.tween_property(rect, "color:a", 1.0, 0.5)
+	await tw.finished
+	Engine.time_scale = 1.0
+	get_tree().change_scene_to_file(next_scene)
+
+
+func _fade_in() -> void:
+	var rect := _make_fade_rect()
+	rect.color.a = 1.0
+	var tw := create_tween()
+	tw.tween_property(rect, "color:a", 0.0, 0.6)
+	tw.tween_callback(rect.get_parent().queue_free)
+
+
+## Lớp đen phủ toàn màn hình, nằm trên cùng, không chặn chuột.
+func _make_fade_rect() -> ColorRect:
+	var layer := CanvasLayer.new()
+	layer.layer = 100
+	add_child(layer)
+	var rect := ColorRect.new()
+	rect.color = Color.BLACK
+	rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	layer.add_child(rect)
+	rect.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	return rect
 
 
 ## Rời stage giữa chừng (đổi scene) mà chưa nộp thì nộp "quit". Phiên không bỏ dở trên server.
@@ -125,6 +191,14 @@ func _on_enemy_died(_enemy: Enemy) -> void:
 	var clear_ms := stats.elapsed_ms()
 	cleared.emit({"stage_id": stage_id, "clear_time_ms": clear_ms, "kills": total_enemies, "hp_left": hp_left})
 	_submit("clear")
+	if _gate != null:
+		await get_tree().create_timer(0.8).timeout   # để cú chốt kịp hạ xuống rồi mới mở cổng
+		if not is_inside_tree():
+			return
+		if _hud != null:
+			_hud.show_clear_banner(clear_ms, total_enemies, total_enemies, hp_left)
+		_gate.open()
+		return
 	await get_tree().create_timer(1.0).timeout   # cho xem nốt cú chốt rồi mới hiện màn thắng
 	if _hud != null:
 		_hud.show_victory(clear_ms, total_enemies, total_enemies, hp_left)

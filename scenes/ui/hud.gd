@@ -44,6 +44,12 @@ var _boss_trail_tween: Tween
 var _run_status := ""
 var _next_scene := ""
 var _next_text := "Stage tiếp"
+var _banner: Control
+var _banner_stats: Label
+var _banner_status: Label
+var _arrow_root: Control
+var _arrow: Label
+var _arrow_tween: Tween
 var _next_btn: Button
 var _victory_menu_btn: Button
 var _slots: Array[Dictionary] = []
@@ -56,6 +62,8 @@ func _ready() -> void:
 	_style_bar(_hp_bar, Color(0.85, 0.2, 0.25), Color(0, 0, 0, 0))   # nền trong suốt để thấy vệt trễ phía sau
 	_build_slots()
 	_build_boss_bar()
+	_build_clear_banner()
+	_build_go_arrow()
 	add_to_group(&"hud")   # Level tìm HUD qua group này
 	_game_over.hide()
 	_victory.hide()
@@ -370,8 +378,103 @@ func _on_run_submitted(text: String, _response: Dictionary) -> void:
 ## Dòng trạng thái nộp kết quả lên backend, hiện ở cả màn thắng lẫn màn thua.
 func set_run_status(text: String) -> void:
 	_run_status = text
+	if _banner_status != null:
+		_banner_status.text = text
 	_victory_status.text = text
 	_gameover_status.text = text
+
+
+# ---------------- Báo hiệu qua cổng (stage có ExitGate) ----------------
+## Thay cho bảng thắng: banner nhỏ phía trên + mũi tên đỏ ở mép phải chỉ hướng tới cổng, không chặn gameplay.
+
+func _build_clear_banner() -> void:
+	_banner = VBoxContainer.new()
+	_banner.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_banner.anchor_left = 0.5
+	_banner.anchor_right = 0.5
+	_banner.offset_left = -300.0
+	_banner.offset_right = 300.0
+	_banner.offset_top = 84.0   # nằm dưới thanh máu boss
+	$Root.add_child(_banner)
+
+	var title := Label.new()
+	title.text = "HOÀN THÀNH STAGE"
+	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	title.add_theme_color_override("font_color", Color(1.0, 0.85, 0.3))
+	_outline(title, 30)
+	_banner.add_child(title)
+
+	_banner_stats = Label.new()
+	_banner_stats.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_outline(_banner_stats, 20)
+	_banner.add_child(_banner_stats)
+
+	_banner_status = Label.new()
+	_banner_status.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_banner_status.add_theme_color_override("font_color", Color(0.75, 0.85, 1.0))
+	_outline(_banner_status, 16)
+	_banner.add_child(_banner_status)
+
+	var hint := Label.new()
+	hint.text = "Chạy sang phải để qua cổng"
+	hint.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_outline(hint, 18)
+	_banner.add_child(hint)
+
+	_banner.modulate.a = 0.0
+	_banner.hide()
+
+
+func show_clear_banner(clear_time_ms: int, kills: int, total: int, hp_left: float) -> void:
+	var secs := clear_time_ms / 1000.0
+	_banner_stats.text = "Thời gian %02d:%04.1f  ·  Hạ quái %d/%d  ·  Máu còn %d" % [
+		floori(secs / 60.0), fmod(secs, 60.0), kills, total, ceili(hp_left)]
+	_banner_status.text = _run_status if _run_status != "" else "Đang nộp kết quả..."
+	_banner.show()
+	var tw := create_tween()
+	tw.tween_property(_banner, "modulate:a", 1.0, 0.4)
+	tw.tween_interval(8.0)
+	tw.tween_property(_banner, "modulate:a", 0.0, 1.0)   # tự mờ đi cho đỡ vướng
+	tw.tween_callback(_banner.hide)
+
+
+func _build_go_arrow() -> void:
+	_arrow_root = Control.new()
+	_arrow_root.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_arrow_root.anchor_left = 1.0
+	_arrow_root.anchor_right = 1.0
+	_arrow_root.anchor_top = 0.5
+	_arrow_root.anchor_bottom = 0.5
+	$Root.add_child(_arrow_root)
+
+	_arrow = Label.new()
+	_arrow.text = ">"
+	_arrow.position = Vector2(-100.0, -70.0)
+	_arrow.size = Vector2(80.0, 140.0)
+	_arrow.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	_arrow.vertical_alignment = VERTICAL_ALIGNMENT_CENTER
+	_arrow.add_theme_color_override("font_color", Color(0.9, 0.15, 0.12))
+	_outline(_arrow, 110)
+	_arrow_root.add_child(_arrow)
+	_arrow_root.hide()
+
+
+## Bật/tắt mũi tên đỏ ở mép phải màn hình (Level bật khi cổng đã mở mà còn ngoài tầm nhìn).
+func set_go_arrow(on: bool) -> void:
+	if on == _arrow_root.visible:
+		return
+	_arrow_root.visible = on
+	if _arrow_tween != null and _arrow_tween.is_valid():
+		_arrow_tween.kill()
+	if not on:
+		return
+	_arrow.position.x = -100.0
+	_arrow.modulate.a = 1.0
+	_arrow_tween = create_tween().set_loops()   # nhấp nhô sang phải + chớp nhẹ
+	_arrow_tween.tween_property(_arrow, "position:x", -84.0, 0.45)
+	_arrow_tween.parallel().tween_property(_arrow, "modulate:a", 0.45, 0.45)
+	_arrow_tween.tween_property(_arrow, "position:x", -100.0, 0.45)
+	_arrow_tween.parallel().tween_property(_arrow, "modulate:a", 1.0, 0.45)
 
 
 # ---------------- Thua ----------------

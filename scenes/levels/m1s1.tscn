@@ -30,6 +30,7 @@ size = Vector2(240, 20)
 script = ExtResource("1_level")
 stage_id = "m1s1"
 next_scene = "res://scenes/levels/m1s2.tscn"
+use_exit_gate = true
 
 [node name="Background" type="CanvasLayer" parent="."]
 layer = -10
